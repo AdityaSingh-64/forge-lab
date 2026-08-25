@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Forgelabs — Crafting Next‑Gen Products</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="/">
+      <img src="assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+    <button class="hamburger" aria-label="menu" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-bg">
+      <div class="blob" aria-hidden="true"></div>
+      <canvas id="particles" aria-hidden="true"></canvas>
+    </div>
+    <div class="hero-content">
+      <!-- <h1>Forgelabs</h1>
+      <p class="tagline">Design. Build. Forge ideas into products.</p> -->
+      <div class="hero-actions">
+        <a class="btn" href="#projects">Our Work</a>
+        <a class="btn ghost" href="#contact">Start a project</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="section about">
+      <div class="container">
+        <h2>About Forgelabs</h2>
+        <p>Forgelabs is a product studio that blends engineering and design to build delightful digital experiences. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
+      </div>
+    </section>
+
+    <section id="services" class="section services">
+      <div class="container grid">
+        <div class="card">
+          <h3>Product Design</h3>
+          <p>UX research, interfaces, and visual design for usable products.</p>
+        </div>
+        <div class="card">
+          <h3>Engineering</h3>
+          <p>Front-end, back-end and cloud — scalable and maintainable systems.</p>
+        </div>
+        <div class="card">
+          <h3>Brand & Motion</h3>
+          <p>Brand identity, animations and marketing assets.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects">
+      <div class="container">
+        <h2>Selected Projects</h2>
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="thumb"></div>
+            <h4>Project One</h4>
+            <p>Fast web app with delightful interactions.</p>
+          </article>
+          <article class="project-card">
+            <div class="thumb"></div>
+            <h4>Project Two</h4>
+            <p>Design system and component library.</p>
+          </article>
+          <article class="project-card">
+            <div class="thumb"></div>
+            <h4>Project Three</h4>
+            <p>Mobile experience with native-feel animations.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>Let's build something together. Email: <a href="mailto:hello@forgelabs.com">hello@forgelabs.com</a></p>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks — message sent!')">
+          <input placeholder="Your name" required />
+          <input type="email" placeholder="Email" required />
+          <textarea placeholder="Brief message" rows="4" required></textarea>
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© Forgelabs — Crafted with care</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
