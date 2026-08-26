@@ -24,6 +24,19 @@ function start(){resize(); makeParticles(Math.round((canvas.width*canvas.height)
 window.addEventListener('resize', ()=>{resize(); makeParticles( Math.round((canvas.width*canvas.height)/90000) ); });
 if(canvas && ctx){start();}
 
+// Nav background toggles on once scrolled past the midpoint of the hero
+function updateNavBackground(){
+  const hero = document.querySelector('.hero');
+  const nav = document.querySelector('.nav');
+  if(!hero || !nav) return;
+  const threshold = hero.offsetHeight * 0.5;
+  if(window.scrollY > threshold){ nav.classList.add('scrolled'); }
+  else { nav.classList.remove('scrolled'); }
+}
+window.addEventListener('scroll', updateNavBackground, {passive:true});
+window.addEventListener('resize', updateNavBackground);
+updateNavBackground();
+
 // Mobile nav toggle
 function toggleNav(){
   const links = document.querySelector('.nav-links');
