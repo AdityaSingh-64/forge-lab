@@ -47,17 +47,44 @@ if(canvas && ctx){start();}
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) lastFrameTime = performance.now(); });
 
 // Nav background toggles on once scrolled past the midpoint of the hero
-function updateNavBackground(){
-  const hero = document.querySelector('.hero');
-  const nav = document.querySelector('.nav');
-  if(!hero || !nav) return;
-  const threshold = hero.offsetHeight * 0.5;
-  if(window.scrollY > threshold){ nav.classList.add('scrolled'); }
-  else { nav.classList.remove('scrolled'); }
-}
-window.addEventListener('scroll', updateNavBackground, {passive:true});
-window.addEventListener('resize', updateNavBackground);
-updateNavBackground();
+// Using IntersectionObserver with a threshold that corresponds to ~50% of hero height
+(function(){
+  var nav = document.querySelector('.nav');
+  var hero = document.querySelector('.hero');
+  if(!nav || !hero) return;
+
+  // Fallback scroll-based approach
+  function checkNav(){
+    var threshold = hero.offsetHeight * 0.5;
+    if(window.scrollY > threshold){
+      if(!nav.classList.contains('scrolled')) nav.classList.add('scrolled');
+    } else {
+      if(nav.classList.contains('scrolled')) nav.classList.remove('scrolled');
+    }
+  }
+
+  // Try IntersectionObserver with a small sentinel element at the hero midpoint
+  if('IntersectionObserver' in window){
+    var sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:50%;left:0;width:1px;height:1px;pointer-events:none;';
+    hero.appendChild(sentinel);
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          nav.classList.remove('scrolled');
+        } else {
+          nav.classList.add('scrolled');
+        }
+      });
+    }, {threshold: 0});
+    observer.observe(sentinel);
+  }
+
+  // Always run scroll fallback as well for reliability
+  window.addEventListener('scroll', checkNav, {passive:true});
+  window.addEventListener('resize', checkNav);
+  checkNav();
+})();
 function initCarousel(){
   const carousel = document.querySelector('[data-carousel]');
   if(!carousel) return;
@@ -73,9 +100,12 @@ function initCarousel(){
 
   let currentIndex = 0;
   let startX = 0;
+  let startY = 0;
   let dragOffset = 0;
   let dragStartTranslate = 0;
+  let isTracking = false;
   let isDragging = false;
+  let dragAxis = null;
 
   function getVisibleCards(){
     if(window.innerWidth <= 767) return 1;
@@ -141,15 +171,37 @@ function initCarousel(){
   }
 
   function handlePointerDown(event){
-    isDragging = true;
+    isTracking = true;
+    isDragging = false;
+    dragAxis = null;
     startX = event.clientX;
+    startY = event.clientY;
     dragStartTranslate = currentIndex * getCardStep();
     dragOffset = 0;
-    viewport.setPointerCapture(event.pointerId);
-    track.style.transition = 'none';
   }
 
   function handlePointerMove(event){
+    if(!isTracking) return;
+
+    if(dragAxis === null){
+      const deltaX = event.clientX - startX;
+      const deltaY = event.clientY - startY;
+      // Wait for a small, unambiguous movement before deciding whether
+      // this gesture is a horizontal swipe (ours) or a vertical scroll
+      // (the browser's) — this keeps page scrolling working normally.
+      if(Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
+      dragAxis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+      if(dragAxis === 'x'){
+        isDragging = true;
+        viewport.setPointerCapture(event.pointerId);
+        track.style.transition = 'none';
+      } else {
+        // Vertical intent: let the browser scroll, don't touch the carousel.
+        isTracking = false;
+        return;
+      }
+    }
+
     if(!isDragging) return;
     dragOffset = event.clientX - startX;
     const offset = dragStartTranslate - dragOffset;
@@ -159,10 +211,14 @@ function initCarousel(){
   }
 
   function handlePointerUp(event){
+    isTracking = false;
     if(!isDragging) return;
     isDragging = false;
+    dragAxis = null;
     track.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
-    viewport.releasePointerCapture(event.pointerId);
+    if(viewport.hasPointerCapture && viewport.hasPointerCapture(event.pointerId)){
+      viewport.releasePointerCapture(event.pointerId);
+    }
 
     const step = getCardStep();
     if(dragOffset > step * 0.45){
