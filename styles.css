@@ -82,11 +82,11 @@ section[id]{scroll-margin-top:90px}
 .services-carousel{position:relative;padding:0 52px;display:flex;align-items:center;gap:12px}
 .carousel-viewport{overflow:hidden;flex:1;min-width:0;touch-action:pan-y}
 .carousel-track{display:flex;gap:20px;transition:transform .45s cubic-bezier(.22,1,.36,1);will-change:transform}
-.service-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06); border-radius:20px; padding:24px 20px 18px; min-height:380px; box-shadow:0 24px 60px rgba(7,17,36,0.25); transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .3s ease; position:relative; overflow:hidden}
-.service-card::before{content:""; position:absolute; inset:0 auto auto 0; width:100%; height:1px; background:linear-gradient(90deg, rgba(110,231,183,0.45), rgba(124,92,255,0.2), transparent); opacity:0}
-.service-card:hover{transform:translateY(-8px); box-shadow:0 25px 60px rgba(12,24,42,0.45); border-color:rgba(110,231,183,0.28)}
+.service-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, rgba(232,96,76,0.26), rgba(245,166,35,0.14) 38%, rgba(7,17,36,0.96)), linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border:1px solid rgba(232,96,76,0.2); border-radius:20px; padding:24px 20px 18px; min-height:380px; box-shadow:0 24px 60px rgba(7,17,36,0.25); transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .3s ease; position:relative; overflow:hidden}
+.service-card::before{content:""; position:absolute; inset:0 auto auto 0; width:100%; height:1px; background:linear-gradient(90deg, rgba(232,96,76,0.72), rgba(245,166,35,0.5), transparent); opacity:0}
+.service-card:hover{transform:translateY(-8px); box-shadow:0 25px 60px rgba(12,24,42,0.45); border-color:rgba(232,96,76,0.34)}
 .service-card:hover::before{opacity:1}
-.service-card-featured{background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border-color:rgba(255,255,255,0.06)}
+.service-card-featured{background:linear-gradient(135deg, rgba(232,96,76,0.34), rgba(245,166,35,0.18) 42%, rgba(7,17,36,0.98)), linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border-color:rgba(232,96,76,0.28)}
 .service-card-featured .service-icon{background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.08)}
 
 .service-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);margin-bottom:18px;transition:transform .25s ease, border-color .25s ease}
@@ -114,11 +114,20 @@ section[id]{scroll-margin-top:90px}
 .carousel-dots button::after{content:"";position:absolute;inset:-12px}
 .carousel-dots button.active{width:28px;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2))}
 
-.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
-.project-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);transition:transform .25s ease, box-shadow .25s ease; transform:translateY(0); will-change:transform}
+.projects-carousel{position:relative;padding:0 52px;display:flex;align-items:center;gap:12px;margin-top:18px}
+.projects-carousel .carousel-viewport{overflow:hidden;flex:1;min-width:0;touch-action:pan-y}
+.projects-carousel .carousel-track{display:flex;gap:20px;transition:transform .45s cubic-bezier(.22,1,.36,1);will-change:transform}
+.project-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);transition:transform .25s ease, box-shadow .25s ease; transform:translateY(0); will-change:transform; display:flex; flex-direction:column; gap:12px}
 .project-card:hover{transform:translateY(-8px) scale(1.01); box-shadow:0 12px 28px rgba(245,166,35,0.12)}
 .project-card .thumb{height:140px;border-radius:8px;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));margin-bottom:12px;box-shadow:0 8px 30px rgba(245,166,35,0.12); transition:transform .25s ease;}
 .project-card:hover .thumb{transform:scale(1.04)}
+.project-card .project-thumb{width:100%;height:190px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);box-shadow:0 8px 30px rgba(7,17,36,0.24);transition:transform .25s ease}
+.project-card:hover .project-thumb{transform:scale(1.02)}
+.project-card h4{margin:0;font-size:1.2rem;line-height:1.3}
+.project-card p{margin:0;color:rgba(230,238,248,0.78);line-height:1.7}
+.project-content{display:flex;flex-direction:column;gap:12px}
+.project-skills{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0}
+.project-skills li{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:rgba(230,238,248,0.8);font-size:0.68rem;letter-spacing:0.01em}
 
 .contact-form{display:flex;flex-direction:column;gap:12px;max-width:600px}
 .email-link{color:var(--accent-1);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(232,96,76,0.4);transition:color .2s ease, border-color .2s ease}
@@ -142,6 +151,8 @@ section[id]{scroll-margin-top:90px}
 
 @media (max-width:1024px){
   .service-card{flex-basis:calc((100% - 20px) / 2)}
+  .projects-carousel{padding:0 44px}
+  .project-card{flex-basis:calc((100% - 20px) / 2)}
   .services-carousel{padding:0 44px}
 }
 
@@ -152,11 +163,12 @@ section[id]{scroll-margin-top:90px}
   .hero h1{font-size:38px}
   .hero-logo{margin-bottom:24px}
   .testimonial blockquote{font-size:22px}
-  .projects-grid{grid-template-columns:1fr}
 }
 
 @media (max-width:767px){
   .service-card{flex-basis:100%}
+  .projects-carousel{padding:0 36px}
+  .project-card{flex-basis:100%}
   .services-carousel{padding:0 36px}
   .carousel-btn{width:34px;height:34px}
 }
@@ -165,6 +177,7 @@ section[id]{scroll-margin-top:90px}
   /* Arrow buttons don't have room to sit clear of the cards at this
      width, so hand navigation over to swipe + the dots below instead. */
   .services-carousel{padding:0 16px}
+  .projects-carousel{padding:0 16px}
   .carousel-btn{display:none}
 }
 
