@@ -181,23 +181,86 @@
     <section id="projects" class="section projects">
       <div class="container">
         <h2>Selected Projects</h2>
-        <div class="projects-grid">
-          <article class="project-card">
-            <div class="thumb"></div>
-            <h4>Project One</h4>
-            <p>Fast web app with delightful interactions.</p>
-          </article>
-          <article class="project-card">
-            <div class="thumb"></div>
-            <h4>Project Two</h4>
-            <p>Design system and component library.</p>
-          </article>
-          <article class="project-card">
-            <div class="thumb"></div>
-            <h4>Project Three</h4>
-            <p>Mobile experience with native-feel animations.</p>
-          </article>
+        <div class="projects-carousel" data-carousel aria-label="Projects carousel">
+          <button class="carousel-btn prev" type="button" aria-label="Previous projects">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 4.5L8 12l7.5 7.5"/></svg>
+          </button>
+
+          <div class="carousel-viewport">
+            <div class="carousel-track projects-track">
+              <article class="project-card">
+                <img class="project-thumb" src="assets/projects/Mobile Checkout UI.png" alt="E-Commerce Checkout System project preview" />
+                <div class="project-content">
+                  <h4>E-Commerce Checkout System</h4>
+                  <p>Developed a responsive and user-friendly checkout interface featuring multi-step checkout, shipping and payment options, coupon discounts, dynamic order summaries, tax calculations, and secure payment UI.</p>
+                  <ul class="project-skills">
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>JavaScript</li>
+                    <li>Responsive Design</li>
+                    <li>E-commerce UI</li>
+                    <li>Payment Integration</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="project-card">
+                <img class="project-thumb" src="assets/projects/Admin Portal UI.png" alt="Admin Portal project preview" />
+                <div class="project-content">
+                  <h4>Admin Portal</h4>
+                  <p>Developed a responsive HR management dashboard that provides administrators with a centralized interface for employee management, attendance monitoring, leave requests, payroll tracking, department analytics, reports, and organizational announcements.</p>
+                  <ul class="project-skills">
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>JavaScript</li>
+                    <li>Chart.js</li>
+                    <li>Responsive Design</li>
+                    <li>UI/UX</li>
+                    <li>Dashboard Development</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="project-card">
+                <img class="project-thumb" src="assets/projects/Task Dashboard UI.png" alt="FocusFlow project preview" />
+                <div class="project-content">
+                  <h4>FocusFlow</h4>
+                  <p>Designed and developed a responsive productivity dashboard for managing work and personal tasks, featuring task organization, priorities, categories, deadlines, search/filter functionality, and real-time progress analytics.</p>
+                  <ul class="project-skills">
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>JavaScript</li>
+                    <li>Chart.js</li>
+                    <li>Responsive Design</li>
+                    <li>UI/UX</li>
+                    <li>Dashboard Development</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="project-card">
+                <img class="project-thumb" src="assets/projects/Storefront _ Merchant Analytics.png" alt="Shopify E-Commerce Store project preview" />
+                <div class="project-content">
+                  <h4>Shopify E-Commerce Store</h4>
+                  <p>Designed and customized a modern, responsive Shopify storefront with custom Liquid sections, product collections, responsive UI, and an optimized shopping experience. Configured and managed products, collections, navigation, and essential e-commerce functionality through Shopify.</p>
+                  <ul class="project-skills">
+                    <li>Shopify</li>
+                    <li>Liquid</li>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>JavaScript</li>
+                    <li>Shopify Theme Development</li>
+                    <li>Responsive Design</li>
+                    <li>E-commerce UI/UX</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <button class="carousel-btn next" type="button" aria-label="Next projects">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 19.5L16 12l-7.5-7.5"/></svg>
+          </button>
         </div>
+
+        <div class="carousel-dots" aria-label="Projects pagination"></div>
       </div>
     </section>
 

@@ -86,164 +86,162 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) lastFra
   checkNav();
 })();
 function initCarousel(){
-  const carousel = document.querySelector('[data-carousel]');
-  if(!carousel) return;
+  const carousels = document.querySelectorAll('[data-carousel]');
+  if(!carousels.length) return;
 
-  const viewport = carousel.querySelector('.carousel-viewport');
-  const track = carousel.querySelector('.carousel-track');
-  const cards = Array.from(track.children);
-  const prevBtn = carousel.parentElement.querySelector('.carousel-btn.prev');
-  const nextBtn = carousel.parentElement.querySelector('.carousel-btn.next');
-  const dotsContainer = carousel.parentElement.querySelector('.carousel-dots');
+  carousels.forEach((carousel) => {
+    const viewport = carousel.querySelector('.carousel-viewport');
+    const track = carousel.querySelector('.carousel-track');
+    const cards = track ? Array.from(track.children) : [];
+    const prevBtn = carousel.parentElement ? carousel.parentElement.querySelector('.carousel-btn.prev') : null;
+    const nextBtn = carousel.parentElement ? carousel.parentElement.querySelector('.carousel-btn.next') : null;
+    const dotsContainer = carousel.parentElement ? carousel.parentElement.querySelector('.carousel-dots') : null;
 
-  if(!viewport || !track || !cards.length || !prevBtn || !nextBtn || !dotsContainer) return;
+    if(!viewport || !track || !cards.length || !prevBtn || !nextBtn || !dotsContainer) return;
 
-  let currentIndex = 0;
-  let startX = 0;
-  let startY = 0;
-  let dragOffset = 0;
-  let dragStartTranslate = 0;
-  let isTracking = false;
-  let isDragging = false;
-  let dragAxis = null;
+    let currentIndex = 0;
+    let startX = 0;
+    let startY = 0;
+    let dragOffset = 0;
+    let dragStartTranslate = 0;
+    let isTracking = false;
+    let isDragging = false;
+    let dragAxis = null;
 
-  function getVisibleCards(){
-    if(window.innerWidth <= 767) return 1;
-    if(window.innerWidth <= 1024) return 2;
-    return 3;
-  }
-
-  function getCardStep(){
-    const firstCard = cards[0];
-    if(!firstCard) return 0;
-    const styles = getComputedStyle(track);
-    const gap = parseFloat(styles.gap || 0);
-    return firstCard.getBoundingClientRect().width + gap;
-  }
-
-  function buildDots(){
-    const totalSlides = Math.max(1, cards.length - getVisibleCards() + 1);
-    dotsContainer.innerHTML = '';
-    for(let i = 0; i < totalSlides; i += 1){
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = i === 0 ? 'active' : '';
-      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      dot.addEventListener('click', () => {
-        currentIndex = i;
-        updateCarousel();
-      });
-      dotsContainer.appendChild(dot);
+    function getVisibleCards(){
+      if(window.innerWidth <= 767) return 1;
+      if(window.innerWidth <= 1024) return 2;
+      return 3;
     }
-  }
 
-  function updateCarousel(){
-    const visibleCards = getVisibleCards();
-    const maxIndex = Math.max(0, cards.length - visibleCards);
-    currentIndex = Math.min(currentIndex, maxIndex);
-    const step = getCardStep();
-    track.style.transform = `translate3d(-${currentIndex * step}px, 0, 0)`;
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex >= maxIndex;
-
-    const dots = Array.from(dotsContainer.children);
-    dots.forEach((dot, index) => {
-      const isActive = index === currentIndex;
-      dot.classList.toggle('active', isActive);
-      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-    });
-  }
-
-  function goNext(){
-    const visibleCards = getVisibleCards();
-    const maxIndex = Math.max(0, cards.length - visibleCards);
-    if(currentIndex < maxIndex){
-      currentIndex += 1;
-      updateCarousel();
+    function getCardStep(){
+      const firstCard = cards[0];
+      if(!firstCard) return 0;
+      const styles = getComputedStyle(track);
+      const gap = parseFloat(styles.gap || 0);
+      return firstCard.getBoundingClientRect().width + gap;
     }
-  }
 
-  function goPrev(){
-    if(currentIndex > 0){
-      currentIndex -= 1;
-      updateCarousel();
-    }
-  }
-
-  function handlePointerDown(event){
-    isTracking = true;
-    isDragging = false;
-    dragAxis = null;
-    startX = event.clientX;
-    startY = event.clientY;
-    dragStartTranslate = currentIndex * getCardStep();
-    dragOffset = 0;
-  }
-
-  function handlePointerMove(event){
-    if(!isTracking) return;
-
-    if(dragAxis === null){
-      const deltaX = event.clientX - startX;
-      const deltaY = event.clientY - startY;
-      // Wait for a small, unambiguous movement before deciding whether
-      // this gesture is a horizontal swipe (ours) or a vertical scroll
-      // (the browser's) — this keeps page scrolling working normally.
-      if(Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
-      dragAxis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
-      if(dragAxis === 'x'){
-        isDragging = true;
-        viewport.setPointerCapture(event.pointerId);
-        track.style.transition = 'none';
-      } else {
-        // Vertical intent: let the browser scroll, don't touch the carousel.
-        isTracking = false;
-        return;
+    function buildDots(){
+      const totalSlides = Math.max(1, cards.length - getVisibleCards() + 1);
+      dotsContainer.innerHTML = '';
+      for(let i = 0; i < totalSlides; i += 1){
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = i === 0 ? 'active' : '';
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
       }
     }
 
-    if(!isDragging) return;
-    dragOffset = event.clientX - startX;
-    const offset = dragStartTranslate - dragOffset;
-    const maxOffset = (cards.length - getVisibleCards()) * getCardStep();
-    const boundedOffset = Math.min(Math.max(offset, 0), maxOffset || 0);
-    track.style.transform = `translate3d(-${boundedOffset}px, 0, 0)`;
-  }
+    function updateCarousel(){
+      const visibleCards = getVisibleCards();
+      const maxIndex = Math.max(0, cards.length - visibleCards);
+      currentIndex = Math.min(currentIndex, maxIndex);
+      const step = getCardStep();
+      track.style.transform = `translate3d(-${currentIndex * step}px, 0, 0)`;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
 
-  function handlePointerUp(event){
-    isTracking = false;
-    if(!isDragging) return;
-    isDragging = false;
-    dragAxis = null;
-    track.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
-    if(viewport.hasPointerCapture && viewport.hasPointerCapture(event.pointerId)){
-      viewport.releasePointerCapture(event.pointerId);
+      const dots = Array.from(dotsContainer.children);
+      dots.forEach((dot, index) => {
+        const isActive = index === currentIndex;
+        dot.classList.toggle('active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
     }
 
-    const step = getCardStep();
-    if(dragOffset > step * 0.45){
-      goPrev();
-    } else if(dragOffset < -step * 0.45){
-      goNext();
-    } else {
+    function goNext(){
+      const visibleCards = getVisibleCards();
+      const maxIndex = Math.max(0, cards.length - visibleCards);
+      if(currentIndex < maxIndex){
+        currentIndex += 1;
+        updateCarousel();
+      }
+    }
+
+    function goPrev(){
+      if(currentIndex > 0){
+        currentIndex -= 1;
+        updateCarousel();
+      }
+    }
+
+    function handlePointerDown(event){
+      isTracking = true;
+      isDragging = false;
+      dragAxis = null;
+      startX = event.clientX;
+      startY = event.clientY;
+      dragStartTranslate = currentIndex * getCardStep();
+      dragOffset = 0;
+    }
+
+    function handlePointerMove(event){
+      if(!isTracking) return;
+
+      if(dragAxis === null){
+        const deltaX = event.clientX - startX;
+        const deltaY = event.clientY - startY;
+        if(Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
+        dragAxis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+        if(dragAxis === 'x'){
+          isDragging = true;
+          viewport.setPointerCapture(event.pointerId);
+          track.style.transition = 'none';
+        } else {
+          isTracking = false;
+          return;
+        }
+      }
+
+      if(!isDragging) return;
+      dragOffset = event.clientX - startX;
+      const offset = dragStartTranslate - dragOffset;
+      const maxOffset = (cards.length - getVisibleCards()) * getCardStep();
+      const boundedOffset = Math.min(Math.max(offset, 0), maxOffset || 0);
+      track.style.transform = `translate3d(-${boundedOffset}px, 0, 0)`;
+    }
+
+    function handlePointerUp(event){
+      isTracking = false;
+      if(!isDragging) return;
+      isDragging = false;
+      dragAxis = null;
+      track.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
+      if(viewport.hasPointerCapture && viewport.hasPointerCapture(event.pointerId)){
+        viewport.releasePointerCapture(event.pointerId);
+      }
+
+      const step = getCardStep();
+      if(dragOffset > step * 0.45){
+        goPrev();
+      } else if(dragOffset < -step * 0.45){
+        goNext();
+      } else {
+        updateCarousel();
+      }
+    }
+
+    prevBtn.addEventListener('click', goPrev);
+    nextBtn.addEventListener('click', goNext);
+    viewport.addEventListener('pointerdown', handlePointerDown);
+    viewport.addEventListener('pointermove', handlePointerMove);
+    viewport.addEventListener('pointerup', handlePointerUp);
+    viewport.addEventListener('pointerleave', handlePointerUp);
+    viewport.addEventListener('pointercancel', handlePointerUp);
+    window.addEventListener('resize', () => {
+      buildDots();
       updateCarousel();
-    }
-  }
+    });
 
-  prevBtn.addEventListener('click', goPrev);
-  nextBtn.addEventListener('click', goNext);
-  viewport.addEventListener('pointerdown', handlePointerDown);
-  viewport.addEventListener('pointermove', handlePointerMove);
-  viewport.addEventListener('pointerup', handlePointerUp);
-  viewport.addEventListener('pointerleave', handlePointerUp);
-  viewport.addEventListener('pointercancel', handlePointerUp);
-  window.addEventListener('resize', () => {
     buildDots();
     updateCarousel();
   });
-
-  buildDots();
-  updateCarousel();
 }
 
 // Mobile nav toggle
