@@ -8,9 +8,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <title>ForgeLab — Forging Next‑Gen Products</title>
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=24" />
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav">
     <a class="logo" href="#home">
       <img src="assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
@@ -30,20 +31,27 @@
       <div class="blob" aria-hidden="true"></div>
       <canvas id="particles" aria-hidden="true"></canvas>
     </div>
-    <div class="hero-content">
-      <img src="assets/logo-nobg-hq.png" alt="ForgeLab" class="hero-logo" />
-      <h1>We forge ideas into products that ship.</h1>
-      <p class="tagline">ForgeLab is a two-founder digital agency building websites, web apps, digital marketing, and design for growing businesses.</p>
-      <div class="hero-actions">
-        <a class="btn" href="#projects">Our Work</a>
-        <a class="btn ghost" href="#contact">Start a project</a>
+    <div class="hero-inner">
+      <div class="hero-content" data-reveal="scale">
+        <img src="assets/logo-nobg-hq.png" alt="ForgeLab" class="hero-logo" />
+        <h1>We forge ideas into products that ship.</h1>
+        <p class="tagline">ForgeLab is a two-founder digital agency building websites, web apps, digital marketing, and design for growing businesses.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#projects">Our Work</a>
+          <a class="btn ghost" href="#contact">Start a project</a>
+        </div>
       </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
     </div>
   </header>
 
   <main>
-    <section id="about" class="section about">
-      <div class="container">
+    <section id="about" class="section about" data-reveal>
+      <div class="container" data-reveal-group>
+        <p class="eyebrow">01 — The studio</p>
         <h2>About ForgeLab</h2>
         <p>ForgeLab is a product studio that blends engineering and design to build delightful digital experiences. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
         <p>We are built on a simple bet: most digital work suffers from too many hands and not enough ownership. We keep teams small, keep decisions close to the work, and cover the full stack a growing business actually needs — sites, apps, marketing, and design — so it all feels like one team instead of four vendors stitched together.</p>
@@ -51,10 +59,10 @@
     </section>
 
     <section id="services" class="section services">
-      <div class="container services-shell">
+      <div class="container services-shell" data-reveal-group>
         <div class="section-intro">
-          <p class="eyebrow">What we do</p>
-          <h2>Services that turn strategy into momentum.</h2>
+          <p class="eyebrow stagger-child">What we do</p>
+          <h2 class="stagger-child">Services that turn strategy into momentum.</h2>
         </div>
 
         <div class="services-carousel" data-carousel aria-label="Services carousel">
@@ -179,8 +187,9 @@
     </section>
 
     <section id="projects" class="section projects">
-      <div class="container">
-        <h2>Selected Projects</h2>
+      <div class="container" data-reveal-group>
+        <p class="eyebrow">02 — Selected work</p>
+        <h2 class="stagger-child">Selected Projects</h2>
         <div class="projects-carousel" data-carousel aria-label="Projects carousel">
           <button class="carousel-btn prev" type="button" aria-label="Previous projects">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 4.5L8 12l7.5 7.5"/></svg>
@@ -264,16 +273,18 @@
       </div>
     </section>
 
-    <section id="testimonial" class="section testimonial">
-      <div class="container">
+    <section id="testimonial" class="section testimonial" data-reveal="fade">
+      <div class="container" data-reveal-group>
+        <p class="eyebrow">03 — Clients</p>
         <span class="quote-mark">&ldquo;</span>
         <blockquote>They shipped our new site in three weeks and it actually looks like us.</blockquote>
         <cite>— Founder, Local Retail Brand</cite>
       </div>
     </section>
 
-    <section id="contact" class="section contact">
-      <div class="container">
+    <section id="contact" class="section contact" data-reveal>
+      <div class="container" data-reveal-group>
+        <p class="eyebrow">04 — Get in touch</p>
         <h2>Contact</h2>
         <p>Let's build something together. Email: <a class="email-link" href="mailto:hello@theforgelab.in">hello@theforgelab.in</a></p>
         <form class="contact-form" id="contactForm" action="https://formsubmit.co/hello@theforgelab.in" method="POST">
@@ -308,6 +319,10 @@
     <p class="footer-copy">© 2026 ForgeLab</p>
   </footer>
 
-  <script src="script.js"></script>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
+  </button>
+
+  <script src="script.js?v=25"></script>
 </body>
 </html>

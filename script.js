@@ -167,6 +167,22 @@ function initCarousel(){
     const allCards = Array.from(track.children);
     const cloneCount = originalCards.length;
 
+    // Fade-in for project images — must cover CLONES too, otherwise cloned
+    // <img> elements stay at opacity:0 (blank cards) because they never get
+    // the `.loaded` class from the original fade-in pass.
+    const setupCardImages = (card) => {
+      card.querySelectorAll('.project-thumb, .thumb').forEach(img => {
+        if(img.classList.contains('loaded')) return;
+        if(img.complete){
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', () => img.classList.add('loaded'), {once:true});
+          img.addEventListener('error', () => img.classList.add('loaded'), {once:true});
+        }
+      });
+    };
+    allCards.forEach(setupCardImages);
+
     let currentIndex = cloneCount; // Start at first original card
     let startX = 0;
     let startY = 0;
@@ -180,6 +196,57 @@ function initCarousel(){
     let cachedStep = 0;     // Cached card step to avoid getComputedStyle on every call
     let teleportTimer = null; // Tracks pending infinite-scroll teleport
     const TRANSITION_MS = 280; // Snappier transition (was 450ms)
+
+    // Auto-scroll support
+    const AUTO_SCROLL_MS = 2500; // Advance every 2.5 seconds
+    const RESUME_DELAY_MS = 5000; // Resume 5s after last interaction
+    const AUTO_SCROLL_TRANSITION_MS = 500; // Slower, smoother transition for auto-scroll
+    let autoScrollTimer = null;
+    let resumeTimer = null;
+    let sectionInView = false; // Whether the carousel section is visible
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function startAutoScroll(){
+      stopAutoScroll();
+      if(prefersReducedMotion.matches || !sectionInView) return;
+      autoScrollTimer = setInterval(() => {
+        // Don't advance if user is actively dragging or section scrolled away
+        if(!isDragging && sectionInView) goNext(true, true); // smooth=true for auto-scroll
+      }, AUTO_SCROLL_MS);
+    }
+
+    function stopAutoScroll(){
+      if(autoScrollTimer){ clearInterval(autoScrollTimer); autoScrollTimer = null; }
+    }
+
+    function pauseAndResume(){
+      stopAutoScroll();
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(startAutoScroll, RESUME_DELAY_MS);
+    }
+
+    // Observe the parent section — only auto-scroll when in view
+    (function(){
+      const section = carousel.closest('section');
+      if(!section || !('IntersectionObserver' in window)){
+        sectionInView = true; // fallback: always treat as in view
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const wasInView = sectionInView;
+          sectionInView = entry.isIntersecting;
+          if(!wasInView && sectionInView){
+            // Section just came into view — start auto-scroll
+            startAutoScroll();
+          } else if(wasInView && !sectionInView){
+            // Section scrolled away — stop auto-scroll
+            stopAutoScroll();
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(section);
+    })();
 
     function getVisibleCards(){
       if(window.innerWidth <= 767) return 1;
@@ -207,17 +274,19 @@ function initCarousel(){
         dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
         dot.addEventListener('click', () => {
           currentIndex = i + cloneCount;
+          pauseAndResume();
           updateCarousel();
         });
         dotsContainer.appendChild(dot);
       }
     }
 
-    function updateCarousel(animate = true){
+    function updateCarousel(animate = true, smooth = false){
       const visibleCards = getVisibleCards();
       const step = getCardStep();
+      const duration = smooth ? AUTO_SCROLL_TRANSITION_MS : TRANSITION_MS;
       
-      track.style.transition = animate ? `transform ${TRANSITION_MS}ms cubic-bezier(.22,1,.36,1)` : 'none';
+      track.style.transition = animate ? `transform ${duration}ms cubic-bezier(.22,1,.36,1)` : 'none';
       track.style.transform = `translate3d(-${currentIndex * step}px, 0, 0)`;
 
       // Handle infinite scroll - jump back to original position when reaching clones
@@ -263,36 +332,36 @@ function initCarousel(){
       });
     }
 
-    function goNext(infinite = isInfiniteScroll){
+    function goNext(infinite = isInfiniteScroll, smooth = false){
       if(navCooldown) return;
       navCooldown = true;
       setTimeout(() => { navCooldown = false; }, TRANSITION_MS);
       if(infinite){
         currentIndex += 1;
-        updateCarousel();
+        updateCarousel(true, smooth);
       } else {
         const visibleCards = getVisibleCards();
         const maxIndex = Math.max(0, originalCards.length - visibleCards);
         const displayIndex = currentIndex - cloneCount;
         if(displayIndex < maxIndex){
           currentIndex += 1;
-          updateCarousel();
+          updateCarousel(true, smooth);
         }
       }
     }
 
-    function goPrev(infinite = isInfiniteScroll){
+    function goPrev(infinite = isInfiniteScroll, smooth = false){
       if(navCooldown) return;
       navCooldown = true;
       setTimeout(() => { navCooldown = false; }, TRANSITION_MS);
       if(infinite){
         currentIndex -= 1;
-        updateCarousel();
+        updateCarousel(true, smooth);
       } else {
         const displayIndex = currentIndex - cloneCount;
         if(displayIndex > 0){
           currentIndex -= 1;
-          updateCarousel();
+          updateCarousel(true, smooth);
         }
       }
     }
@@ -313,8 +382,11 @@ function initCarousel(){
       if(dragAxis === null){
         const deltaX = event.clientX - startX;
         const deltaY = event.clientY - startY;
-        if(Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
-        dragAxis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+        // Small dead zone, then decide axis decisively.
+        // Only engage horizontal drag if X is clearly dominant (1.5x Y),
+        // so diagonal vertical scrolls never move the carousel.
+        if(Math.abs(deltaX) < 3 && Math.abs(deltaY) < 3) return;
+        dragAxis = (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) ? 'x' : 'y';
         if(dragAxis === 'x'){
           isDragging = true;
           viewport.setPointerCapture(event.pointerId);
@@ -322,6 +394,7 @@ function initCarousel(){
           // Prevent vertical scroll on mobile Safari when horizontal swipe is detected
           event.preventDefault();
         } else {
+          // Vertical gesture — hand control back to native page scroll
           isTracking = false;
           return;
         }
@@ -416,7 +489,15 @@ function initCarousel(){
       dots.forEach((dot, i) => { dot.classList.toggle('active', i === activeDot); });
     }
     function handleWheel(event){
-      // Prevent page scroll — all scroll over the carousel goes horizontal
+      const absX = Math.abs(event.deltaX);
+      const absY = Math.abs(event.deltaY);
+
+      // Only capture clearly HORIZONTAL scroll. If there's any meaningful
+      // vertical component, let the page scroll normally. This is critical
+      // for trackpads where most gestures are primarily vertical.
+      if(absX < 2 && absY < 2) return;         // noise — ignore
+      if(absY >= absX * 1.2) return;           // vertical or diagonal — page scroll
+
       event.preventDefault();
 
       let delta = event.deltaX;
@@ -425,6 +506,19 @@ function initCarousel(){
       if(event.deltaMode === 2) delta *= 800;                 // page mode
       if(Math.abs(delta) < 0.5) return;                       // ignore noise
 
+      // Mouse wheel notches are large discrete jumps (~100px).
+      // Treat each notch as one card step so one scroll = one card.
+      if(Math.abs(delta) >= 30){
+        clearTimeout(wheelSnapTimer);
+        if(delta > 0) goNext(true);
+        else goPrev(true);
+        // Also reset any in-progress trackpad tracking
+        wheelAccum = 0;
+        pendingDelta = 0;
+        return;
+      }
+
+      // Trackpad / smooth scroll — accumulate and snap after rest
       // Coalesce multiple wheel events per frame into a single paint
       pendingDelta += delta;
       if(!rafPending){ rafPending = true; requestAnimationFrame(flushWheel); }
@@ -445,8 +539,12 @@ function initCarousel(){
       }, WHEEL_SNAP_MS);
     }
 
-    prevBtn.addEventListener('click', () => goPrev(true));
-    nextBtn.addEventListener('click', () => goNext(true));
+    // Auto-scroll: pause on any user interaction, resume after idle
+    viewport.addEventListener('pointerdown', () => { pauseAndResume(); });
+    viewport.addEventListener('wheel', () => { pauseAndResume(); }, { passive: true });
+
+    prevBtn.addEventListener('click', () => { pauseAndResume(); goPrev(true); });
+    nextBtn.addEventListener('click', () => { pauseAndResume(); goNext(true); });
     viewport.addEventListener('pointerdown', handlePointerDown);
     viewport.addEventListener('pointermove', handlePointerMove);
     viewport.addEventListener('pointerup', handlePointerUp);
@@ -463,7 +561,22 @@ function initCarousel(){
     });
 
     buildDots();
+
+    // Start hidden for graceful crossfade-in
+    track.style.opacity = '0';
+    track.style.transition = 'none';
     updateCarousel();
+
+    // Fade in after initial positioning settles
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        track.style.transition = 'opacity 0.6s cubic-bezier(.22,1,.36,1)';
+        track.style.opacity = '1';
+      });
+    });
+
+    // Start auto-scrolling after initial render
+    startAutoScroll();
   });
 }
 
@@ -511,5 +624,126 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 // Contact form handler with FormSubmit.co
 // No JavaScript needed - form submits directly to FormSubmit
 // First submission will require email verification, then works automatically
+
+// ========================================
+// SCROLL-REVEAL OBSERVER (Apple-style entrances)
+// ========================================
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('[data-reveal],[data-reveal-stagger],[data-reveal-group]');
+
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    // Show everything immediately for reduced-motion or no-IO browsers
+    revealEls.forEach(el => el.classList.add('revealed'));
+    return;
+  }
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.12, rootMargin: '0px 0px -8% 0px'});
+  revealEls.forEach(el => revealObserver.observe(el));
+})();
+
+// ========================================
+// HERO PARALLAX + SCROLL INDICATOR FADE
+// ========================================
+(function(){
+  const heroInner = document.querySelector('.hero-inner');
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(heroInner || scrollIndicator){
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if(!ticking){
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const y = window.scrollY;
+          if(heroInner && y < window.innerHeight){
+            heroInner.style.transform = `translateY(${y * 0.22}px)`;
+            heroInner.style.opacity = String(Math.max(0, 1 - y / (window.innerHeight * 0.9)));
+          }
+          if(scrollIndicator){
+            scrollIndicator.classList.toggle('hidden', y > 80);
+          }
+        });
+      }
+    }, {passive: true});
+  }
+})();
+
+// ========================================
+// PAGE LOAD FADE-IN
+// ========================================
+(function(){
+  document.body.classList.add('loading');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.body.classList.remove('loading');
+  }));
+})();
+
+
+// ========================================
+// APPLE-LEVEL POLISH: scroll progress + image fade-in
+// ========================================
+(function(){
+  // Mark the page as enhanced (enables safe JS-dependent polish)
+  document.body.classList.add('enhanced');
+
+  // Scroll progress bar
+  const progress = document.querySelector('.scroll-progress');
+  if(progress && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? window.scrollY / max : 0;
+      progress.style.transform = `scaleX(${pct})`;
+    };
+    window.addEventListener('scroll', () => {
+      if(!ticking){ ticking = true; requestAnimationFrame(update); }
+    }, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+    update();
+  }
+
+  // Image fade-in: add .loaded once each project image is fully loaded
+  const imgs = document.querySelectorAll('.project-thumb, .project-card .thumb');
+  imgs.forEach(img => {
+    if(img.complete){
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => img.classList.add('loaded'), {once:true});
+      // Safety fallback if load never fires (cached/partial)
+      img.addEventListener('error', () => img.classList.add('loaded'), {once:true});
+    }
+  });
+})();
+
+// ========================================
+// BACK-TO-TOP BUTTON
+// ========================================
+(function(){
+  const btn = document.getElementById('backToTop');
+  if(!btn) return;
+  const navTicking = {v:false};
+  const update = () => {
+    navTicking.v = false;
+    btn.classList.toggle('visible', window.scrollY > 400);
+  };
+  window.addEventListener('scroll', () => {
+    if(!navTicking.v){ navTicking.v = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+  update();
+  btn.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+
 
 document.addEventListener('DOMContentLoaded', initCarousel);
