@@ -243,6 +243,18 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 .project-skills{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0}
 .project-skills li{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:rgba(230,238,248,0.8);font-size:0.68rem;letter-spacing:0.01em}
 
+/* ========================================
+   WHY FORGELAB — Value-props grid
+   Static 4-col grid (no carousel).
+   ======================================== */
+.why-forgelab .why-subhead{margin:0 0 32px;max-width:520px;color:rgba(230,238,248,0.6);line-height:1.7}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{display:flex;flex-direction:column;gap:14px;padding:24px 20px 20px}
+.why-card h3{margin:0;font-size:1.05rem;line-height:1.3;color:#fff}
+.why-card p{margin:0;color:rgba(230,238,248,0.72);line-height:1.65;font-size:0.92rem}
+@media (max-width:1024px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.why-grid{grid-template-columns:1fr}}
+
 .contact-form{display:flex;flex-direction:column;gap:12px;max-width:600px}
 .email-link{color:var(--accent-1);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(232,96,76,0.4);transition:color .2s ease, border-color .2s ease}
 .email-link:hover{color:var(--accent-2);border-color:rgba(245,166,35,0.6)}
