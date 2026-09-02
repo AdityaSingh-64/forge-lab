@@ -166,7 +166,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 
 .services-shell{padding-top:40px;padding-bottom:40px}
 .section-intro{display:flex;flex-direction:column;gap:8px;max-width:760px;margin-bottom:24px}
-.eyebrow{margin:0;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.18em;font-size:12px;font-weight:700}
+.section .eyebrow{margin:0;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.18em;font-size:12px;font-weight:700}
 .section-intro h2{margin:0;font-size:clamp(3rem, 6vw, 6.6rem);line-height:0.9;letter-spacing:-0.06em;background:linear-gradient(180deg,#fff 0%,#e6eef8 60%,#93a5bb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 .services-carousel{position:relative;padding:0 52px;display:flex;align-items:center;gap:12px}
