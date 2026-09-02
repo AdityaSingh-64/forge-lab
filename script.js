@@ -319,6 +319,8 @@ function initCarousel(){
           isDragging = true;
           viewport.setPointerCapture(event.pointerId);
           track.style.transition = 'none';
+          // Prevent vertical scroll on mobile Safari when horizontal swipe is detected
+          event.preventDefault();
         } else {
           isTracking = false;
           return;
@@ -326,6 +328,8 @@ function initCarousel(){
       }
 
       if(!isDragging) return;
+      // Continue preventing default for horizontal swipes
+      event.preventDefault();
       dragOffset = event.clientX - startX;
       const offset = dragStartTranslate - dragOffset;
       const step = getCardStep();
