@@ -1,0 +1,12 @@
+{
+  "name": "forgelab-website",
+  "version": "1.0.0",
+  "description": "ForgeLab - Forging Next-Gen Products",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
