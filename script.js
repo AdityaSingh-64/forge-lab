@@ -470,8 +470,33 @@ function initCarousel(){
 // Mobile nav toggle
 function toggleNav(){
   const links = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  
   if(!links) return;
-  if(links.style.display==='flex'){links.style.display='none'}else{links.style.display='flex';links.style.flexDirection='column';links.style.background='transparent';links.style.position='absolute';links.style.right='20px';links.style.top='56px';links.style.padding='12px';links.style.borderRadius='8px'}
+  
+  const isOpen = links.classList.contains('active');
+  
+  if(isOpen){
+    // Close menu
+    links.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+  } else {
+    // Open menu
+    links.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function closeNav(){
+  const links = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  
+  if(!links) return;
+  
+  links.classList.remove('active');
+  if(hamburger){
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
 }
 
 // Smooth anchor links
