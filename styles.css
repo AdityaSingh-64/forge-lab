@@ -5,6 +5,7 @@
   --accent-2: #F5A623; /* amber */
   --glass: rgba(255,255,255,0.06);
   --muted: rgba(255,255,255,0.7);
+  --max-content-width: 1400px; /* max width for ultra-wide displays */
 }
 *{box-sizing:border-box}
 html,body{min-height:100%;min-height:100dvh;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;overflow-x:hidden}
@@ -17,6 +18,8 @@ body{
   /* iOS safe area support */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;background:radial-gradient(1200px 600px at 10% 10%, rgba(245,166,35,0.08), transparent);pointer-events:none;z-index:-1;will-change:auto}
@@ -162,6 +165,37 @@ section[id]{scroll-margin-top:90px}
 .testimonial cite{display:block;font-style:normal;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
 
 
+/* ========================================
+   ULTRA-WIDE DISPLAYS (1920px+)
+   ======================================== */
+@media (min-width:1921px){
+  .container{max-width:var(--max-content-width);padding:80px 48px}
+  .hero-content{max-width:900px}
+  .hero h1{font-size:62px;line-height:1.15}
+  .tagline{font-size:23px;max-width:720px}
+  .testimonial blockquote{font-size:32px;max-width:860px}
+  .service-card{max-width:420px}
+  .project-card{max-width:520px}
+}
+
+/* ========================================
+   LARGE DESKTOP (1440px - 1920px)
+   ======================================== */
+@media (min-width:1441px) and (max-width:1920px){
+  .container{max-width:1280px;padding:68px 36px}
+  .hero h1{font-size:58px}
+  .tagline{font-size:21px}
+}
+
+/* ========================================
+   TABLET LANDSCAPE & SMALL LAPTOPS (1024px - 1280px)
+   ======================================== */
+@media (max-width:1280px){
+  .container{padding:52px 28px}
+  .hero h1{font-size:52px}
+  .tagline{font-size:19px}
+}
+
 @media (max-width:1024px){
   .service-card{flex-basis:calc((100% - 20px) / 2)}
   .projects-carousel{padding:0 44px}
@@ -170,8 +204,14 @@ section[id]{scroll-margin-top:90px}
   .carousel-viewport::before,.carousel-viewport::after{width:40px}
   .carousel-viewport::before{left:0}
   .carousel-viewport::after{right:0}
+  /* Activate mobile nav for tablet landscape */
+  .nav .nav-links{font-size:15px;gap:14px}
+  .btn-cta{padding:7px 12px;font-size:14px}
 }
 
+/* ========================================
+   TABLET PORTRAIT & FOLDABLES (768px - 900px)
+   ======================================== */
 @media (max-width:900px){
   .nav{
     flex-wrap:wrap;
@@ -225,6 +265,9 @@ section[id]{scroll-margin-top:90px}
   .testimonial blockquote{font-size:22px}
 }
 
+/* ========================================
+   TABLET PORTRAIT - iPads, Android Tablets (768px - 900px)
+   ======================================== */
 @media (max-width:767px){
   .service-card{flex-basis:100%}
   .projects-carousel{padding:0 36px}
@@ -234,8 +277,14 @@ section[id]{scroll-margin-top:90px}
   .carousel-viewport::before,.carousel-viewport::after{width:36px}
   .carousel-viewport::before{left:0}
   .carousel-viewport::after{right:0}
+  .container{padding:48px 20px}
+  .hero h1{font-size:36px}
+  .tagline{font-size:17px}
 }
 
+/* ========================================
+   LARGE PHONES & FOLDABLES FOLDED (560px - 767px)
+   ======================================== */
 @media (max-width:560px){
   /* Arrow buttons don't have room to sit clear of the cards at this
      width, so hand navigation over to swipe + the dots below instead. */
@@ -245,8 +294,14 @@ section[id]{scroll-margin-top:90px}
   .carousel-viewport::before,.carousel-viewport::after{width:24px}
   .carousel-viewport::before{left:0}
   .carousel-viewport::after{right:0}
+  .container{padding:42px 18px}
+  .hero h1{font-size:32px}
+  .tagline{font-size:16px}
 }
 
+/* ========================================
+   STANDARD PHONES (480px - 560px)
+   ======================================== */
 @media (max-width:480px){
   .services-shell{padding-top:26px;padding-bottom:26px}
   .service-card{padding:20px 16px 16px;min-height:330px}
@@ -254,7 +309,94 @@ section[id]{scroll-margin-top:90px}
   .service-body p{font-size:0.92rem}
   .service-points li{font-size:0.7rem}
   .section-intro h2{font-size:2rem;line-height:1.1}
+  .container{padding:36px 16px}
+  .hero h1{font-size:28px;line-height:1.2}
+  .tagline{font-size:15px}
 }
+
+/* ========================================
+   SMALL PHONES (375px - 480px)
+   ======================================== */
+@media (max-width:375px){
+  .container{padding:32px 14px}
+  .hero h1{font-size:26px}
+  .tagline{font-size:14px}
+  .testimonial blockquote{font-size:19px}
+  .btn, .btn.ghost{padding:11px 18px;font-size:14px}
+}
+
+/* ========================================
+   EXTRA SMALL PHONES (<375px)
+   ======================================== */
+@media (max-width:360px){
+  .container{padding:28px 12px}
+  .hero h1{font-size:24px}
+  .tagline{font-size:13px}
+  .hero-actions{flex-direction:column;gap:12px;width:100%}
+  .hero-actions .btn{width:100%}
+  .section-intro h2{font-size:1.75rem}
+  .testimonial blockquote{font-size:18px}
+}
+
+/* ========================================
+   ORIENTATION-SPECIFIC ADJUSTMENTS
+   ======================================== */
+
+/* Tablet Landscape Mode - optimize horizontal space */
+@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
+  .container{padding:48px 32px}
+  .hero{min-height:90vh;min-height:90dvh}
+  .hero h1{font-size:44px}
+  .hero-content{max-width:85%}
+  .service-card{padding:24px 20px}
+  .project-card{padding:24px}
+  .testimonial{padding:80px 0}
+}
+
+/* Tablet Portrait Mode - optimize vertical scrolling */
+@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
+  .container{padding:56px 28px}
+  .hero h1{font-size:46px}
+  .service-card{flex-basis:100%;max-width:600px;margin:0 auto}
+  .project-card{flex-basis:100%;max-width:600px;margin:0 auto}
+  .carousel-track{justify-content:center}
+}
+
+/* Phone Landscape Mode - compact for short screens */
+@media (max-width:767px) and (orientation:landscape){
+  .hero{min-height:100vh;min-height:100dvh;padding:40px 0}
+  .hero-content{padding:20px 0}
+  .hero h1{font-size:32px;margin-bottom:12px}
+  .hero-logo{height:80px;margin-bottom:16px}
+  .tagline{font-size:15px;margin-bottom:20px}
+  .hero-actions{gap:12px}
+  .container{padding:36px 20px}
+  section{padding:32px 0}
+  .testimonial{padding:60px 0}
+  .testimonial blockquote{font-size:20px}
+}
+
+/* ========================================
+   FOLDABLE & DUAL-SCREEN DEVICES
+   ======================================== */
+
+/* Samsung Galaxy Fold (unfolded: 884px) */
+@media (min-width:884px) and (max-width:900px){
+  .nav .nav-links{gap:16px;font-size:15px}
+  .btn-cta{padding:7px 13px}
+  .container{max-width:820px}
+  .service-card{flex-basis:calc((100% - 20px) / 2)}
+}
+
+/* Surface Duo (unfolded: 720px) */
+@media (min-width:720px) and (max-width:767px){
+  .service-card{flex-basis:calc((100% - 20px) / 2)}
+  .project-card{flex-basis:calc((100% - 20px) / 2)}
+}
+
+/* ========================================
+   ACCESSIBILITY & MOTION PREFERENCES
+   ======================================== */
 
 /* small accessibility and motion preference */
 @media (prefers-reduced-motion:reduce){
