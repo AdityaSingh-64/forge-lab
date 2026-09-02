@@ -8,6 +8,8 @@
   --max-content-width: 1400px; /* max width for ultra-wide displays */
   --ease-out-expo: cubic-bezier(.16,1,.3,1);
   --ease-spring: cubic-bezier(.22,1,.36,1);
+  /* Shared primary CTA gradient — single source of truth for all brand buttons */
+  --btn-primary-gradient:linear-gradient(90deg,var(--accent-1),var(--accent-2));
 }
 *{box-sizing:border-box}
 html{
@@ -102,7 +104,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 }
 .nav .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:18px;align-items:center}
 .nav .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;transition:color .25s ease}
-.btn-cta{margin-left:auto;margin-right:12px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
+.btn-cta{margin-left:auto;margin-right:12px;background:var(--btn-primary-gradient);border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
 .hamburger{display:none;background:transparent;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;z-index:102;position:relative}
 .hamburger:active{transform:scale(0.95)}
 
@@ -137,7 +139,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 .tagline{color:rgba(230,238,248,0.85);margin-top:14px;font-size:17px;max-width:60ch;font-weight:400;letter-spacing:.01em}
 .hero-actions{margin-top:32px;display:flex;justify-content:center;gap:12px}
 .btn{
-  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+  background:var(--btn-primary-gradient);
   color:#071124;padding:12px 18px;border-radius:12px;font-weight:700;
   text-decoration:none;display:inline-block;
   transition:transform .45s var(--ease-spring), box-shadow .45s var(--ease-spring), filter .45s var(--ease-spring);
@@ -155,7 +157,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 @media (max-width:600px){ section[id]{scroll-margin-top:calc(72px + env(safe-area-inset-top, 0px))} }
 /* Cinematic section divider */
 .section::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(90%,720px);height:1px;background:linear-gradient(90deg,transparent,rgba(232,96,76,0.35),rgba(245,166,35,0.25),transparent);pointer-events:none}
-.section h2{font-size:28px;margin:0 0 14px}
+.section h2{margin:0 0 14px;font-size:clamp(2.4rem, 4.5vw, 3.8rem);line-height:1.4;letter-spacing:-0.04em;background:linear-gradient(180deg,#fff 0%,#e6eef8 60%,#93a5bb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .about p{max-width:720px;color:rgba(230,238,248,0.85)}
 .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);transform:translateY(0);transition:transform .55s var(--ease-spring),box-shadow .55s var(--ease-spring), border-color .4s ease; will-change:transform}
 
@@ -166,8 +168,8 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 
 .services-shell{padding-top:40px;padding-bottom:40px}
 .section-intro{display:flex;flex-direction:column;gap:8px;max-width:760px;margin-bottom:24px}
-.eyebrow{margin:0;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.18em;font-size:12px;font-weight:700}
-.section-intro h2{margin:0;font-size:clamp(3rem, 6vw, 6.6rem);line-height:0.9;letter-spacing:-0.06em;background:linear-gradient(180deg,#fff 0%,#e6eef8 60%,#93a5bb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.section .eyebrow{margin:0;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.18em;font-size:12px;font-weight:700}
+.section-intro h2{margin:0;font-size:clamp(2.4rem, 4.5vw, 3.8rem);line-height:1.4;letter-spacing:-0.04em;background:linear-gradient(180deg,#fff 0%,#e6eef8 60%,#93a5bb 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 .services-carousel{position:relative;padding:0 52px;display:flex;align-items:center;gap:12px}
 .carousel-viewport{overflow:hidden;flex:1;min-width:0;touch-action:pan-y;position:relative}
@@ -175,7 +177,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 .carousel-viewport::before{left:0;background:linear-gradient(90deg,rgba(7,17,36,0.7),transparent)}
 .carousel-viewport::after{right:0;background:linear-gradient(-90deg,rgba(7,17,36,0.7),transparent)}
 .carousel-track{display:flex;gap:20px;transition:transform .28s cubic-bezier(.22,1,.36,1);will-change:transform;padding:12px 24px}
-.service-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, rgba(232,96,76,0.26), rgba(245,166,35,0.14) 38%, rgba(7,17,36,0.96)), linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border:1px solid rgba(232,96,76,0.2); border-radius:20px; padding:24px 20px 18px; min-height:380px; box-shadow:0 24px 60px rgba(7,17,36,0.25); transition:transform .55s var(--ease-spring), box-shadow .55s var(--ease-spring), border-color .4s ease, background .4s ease; position:relative; overflow:hidden}
+.service-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, rgba(232,96,76,0.26), rgba(245,166,35,0.14) 38%, rgba(7,17,36,0.96)), linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01)); border:1px solid rgba(232,96,76,0.2); border-radius:16px; padding:24px 20px 18px; min-height:380px; box-shadow:0 24px 60px rgba(7,17,36,0.25); transition:transform .55s var(--ease-spring), box-shadow .55s var(--ease-spring), border-color .4s ease, background .4s ease; position:relative; overflow:hidden}
 .service-card::before{content:""; position:absolute; inset:0 auto auto 0; width:100%; height:1px; background:linear-gradient(90deg, rgba(232,96,76,0.72), rgba(245,166,35,0.5), transparent); opacity:0; transition:opacity .5s ease}
 
 /* Hover effects only on devices with hover capability (desktop) */
@@ -218,7 +220,11 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 .projects-carousel{position:relative;padding:0 52px;display:flex;align-items:center;gap:12px;margin-top:18px}
 .projects-carousel .carousel-viewport{overflow:hidden;flex:1;min-width:0;touch-action:pan-y;position:relative}
 .projects-carousel .carousel-track{display:flex;gap:20px;transition:transform .28s cubic-bezier(.22,1,.36,1);will-change:transform;padding:12px 24px}
-.project-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);transition:transform .55s var(--ease-spring), box-shadow .55s var(--ease-spring), border-color .4s ease; transform:translateY(0); will-change:transform; display:flex; flex-direction:column; gap:12px}
+/* Card chrome is unified (shared radius, padding, border) across both carousels.
+   The background treatment is a DELIBERATE differentiation:
+   - Service cards use a warm coral/amber gradient glow (the "fire"/forge accent).
+   - Project cards stay flat neutral navy so screenshots pop without color cast. */
+.project-card{flex:0 0 calc((100% - 40px) / 3); min-width:0; background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.04);transition:transform .55s var(--ease-spring), box-shadow .55s var(--ease-spring), border-color .4s ease; transform:translateY(0); will-change:transform; display:flex; flex-direction:column; gap:12px}
 .project-card .thumb{height:140px;border-radius:8px;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));margin-bottom:12px;box-shadow:0 8px 30px rgba(245,166,35,0.12); transition:transform .55s var(--ease-spring);}
 .project-card .project-thumb{width:100%;height:190px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);box-shadow:0 8px 30px rgba(7,17,36,0.24);transition:transform .55s var(--ease-spring)}
 
@@ -248,11 +254,14 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 .footer{text-align:center;padding:44px 24px 28px;color:rgba(230,238,248,0.6)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-bottom:24px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);text-align:left}
 .footer-brand{display:inline-flex}
-.footer-logo{height:28px;width:auto;display:block}
+.footer-logo{height:34px;width:auto;display:block}
 .footer-links{list-style:none;display:flex;gap:24px;margin:0;padding:0}
 .footer-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;transition:color .2s ease}
 .footer-links a:hover{color:var(--accent-1)}
-.footer-copy{margin:0;font-size:13px;color:rgba(230,238,248,0.45);text-align:left}
+.footer-copy{margin:0;font-size:13px;color:rgba(230,238,248,0.6);text-align:left}
+/* Two-tone brand copyright — mirrors the navbar/hero wordmark (white "Forge" + coral "Lab") */
+.footer-copy .brand-forge{color:#fff;font-weight:700}
+.footer-copy .brand-lab{color:var(--accent-1);font-weight:700}
 
 /* Back-to-top floating button (Apple-style, appears after scrolling) */
 .back-to-top{
@@ -274,6 +283,10 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
 }
 .back-to-top:active{transform:translateY(0) scale(.94)}
 
+/* Testimonial pull-quote — INTENTIONAL accent type treatment:
+   - The oversized quote mark uses a serif (Georgia) as a decorative flourish.
+   - The quote itself is set in the standard Inter sans at a large size in italics.
+   This is a deliberate editorial accent for the client quote, not an unstyled fallback. */
 .testimonial{text-align:center;padding:100px 0}
 .testimonial .quote-mark{display:block;font-family:Georgia,'Times New Roman',serif;font-size:72px;line-height:1;color:var(--accent-1);margin-bottom:8px}
 .testimonial blockquote{margin:0 auto 20px;max-width:720px;font-size:28px;font-style:italic;font-weight:600;color:#f3f6fb;line-height:1.4}
@@ -423,7 +436,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .service-body h3{font-size:1.28rem}
   .service-body p{font-size:0.92rem}
   .service-points li{font-size:0.7rem}
-  .section-intro h2{font-size:2rem;line-height:1.1}
+  .section h2{font-size:2rem;line-height:1.2}
   .container{padding:36px 16px}
   .hero h1{font-size:28px;line-height:1.2}
   .tagline{font-size:15px}
@@ -449,7 +462,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .tagline{font-size:13px}
   .hero-actions{flex-direction:column;gap:12px;width:100%}
   .hero-actions .btn{width:100%}
-  .section-intro h2{font-size:1.75rem}
+  .section h2{font-size:1.75rem}
   .testimonial blockquote{font-size:18px}
 }
 
