@@ -237,8 +237,10 @@ function initCarousel(){
           const wasInView = sectionInView;
           sectionInView = entry.isIntersecting;
           if(!wasInView && sectionInView){
-            // Section just came into view — start auto-scroll
-            startAutoScroll();
+            // Section just came into view — defer auto-scroll to the next
+            // frame so it doesn't stack with reveal animations in the
+            // same composite pass.
+            requestAnimationFrame(() => startAutoScroll());
           } else if(wasInView && !sectionInView){
             // Section scrolled away — stop auto-scroll
             stopAutoScroll();
@@ -580,6 +582,39 @@ function initCarousel(){
   });
 }
 
+// Pre-decode project images just before the projects section enters the
+// viewport, so the section's reveal fade-in never triggers a synchronous
+// decode/rasterize (which would drop a frame mid-scroll).
+(function(){
+  const projectsSection = document.querySelector('#projects');
+  if(!projectsSection || !('IntersectionObserver' in window)) return;
+  const imgs = Array.from(projectsSection.querySelectorAll('img.project-thumb, img.thumb'));
+  if(!imgs.length) return;
+
+  const decodeAll = () => {
+    imgs.forEach(img => {
+      // Ensure the resource is fetched, then force decode into memory.
+      if(img.complete){
+        if(img.decode) img.decode().catch(()=>{});
+      } else {
+        img.addEventListener('load', () => {
+          if(img.decode) img.decode().catch(()=>{});
+        }, {once:true});
+      }
+    });
+  };
+
+  // Fire ~600px before the section's top reaches the viewport bottom,
+  // giving the browser idle time to decode before the reveal triggers.
+  const observer = new IntersectionObserver((entries) => {
+    if(entries.some(e => e.isIntersecting)){
+      decodeAll();
+      observer.disconnect();
+    }
+  }, { rootMargin: '0px 0px 600px 0px' });
+  observer.observe(projectsSection);
+})();
+
 // Mobile nav toggle
 function toggleNav(){
   const links = document.querySelector('.nav-links');
@@ -640,11 +675,15 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
-        entry.target.classList.add('revealed');
+        // Defer to next frame so the browser can finish the current
+        // scroll-composite pass before starting a new style/layout burst.
+        requestAnimationFrame(() => {
+          entry.target.classList.add('revealed');
+        });
         revealObserver.unobserve(entry.target);
       }
     });
-  }, {threshold: 0.12, rootMargin: '0px 0px -8% 0px'});
+  }, {threshold: 0, rootMargin: '0px 0px 12% 0px'});
   revealEls.forEach(el => revealObserver.observe(el));
 })();
 
