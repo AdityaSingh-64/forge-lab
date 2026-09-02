@@ -7,8 +7,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-  <title>Forgelabs — Forging Next‑Gen Products</title>
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <title>ForgeLab — Forging Next‑Gen Products</title>
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
   <nav class="nav">
@@ -33,7 +33,7 @@
     <div class="hero-content">
       <img src="assets/logo-nobg-hq.png" alt="ForgeLab" class="hero-logo" />
       <h1>We forge ideas into products that ship.</h1>
-      <p class="tagline">ForgeLabs is a two-founder digital agency building websites, web apps, digital marketing, and design for growing businesses.</p>
+      <p class="tagline">ForgeLab is a two-founder digital agency building websites, web apps, digital marketing, and design for growing businesses.</p>
       <div class="hero-actions">
         <a class="btn" href="#projects">Our Work</a>
         <a class="btn ghost" href="#contact">Start a project</a>
@@ -44,8 +44,8 @@
   <main>
     <section id="about" class="section about">
       <div class="container">
-        <h2>About Forgelabs</h2>
-        <p>Forgelabs is a product studio that blends engineering and design to build delightful digital experiences. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
+        <h2>About ForgeLab</h2>
+        <p>ForgeLab is a product studio that blends engineering and design to build delightful digital experiences. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
         <p>We are built on a simple bet: most digital work suffers from too many hands and not enough ownership. We keep teams small, keep decisions close to the work, and cover the full stack a growing business actually needs — sites, apps, marketing, and design — so it all feels like one team instead of four vendors stitched together.</p>
       </div>
     </section>
@@ -276,11 +276,19 @@
       <div class="container">
         <h2>Contact</h2>
         <p>Let's build something together. Email: <a class="email-link" href="mailto:hello@theforgelab.in">hello@theforgelab.in</a></p>
-        <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks — message sent!')">
-          <input placeholder="Your name" required />
-          <input type="email" placeholder="Email" required />
-          <textarea placeholder="Brief message" rows="4" required></textarea>
+        <form class="contact-form" id="contactForm" action="https://formsubmit.co/hello@theforgelab.in" method="POST">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_subject" value="New Contact from ForgeLab Website">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="box">
+          <input type="text" name="_honey" style="display:none">
+          
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Brief message" rows="4" required></textarea>
           <button class="btn" type="submit">Send</button>
+          
+          <div class="form-status" id="formStatus" aria-live="polite"></div>
         </form>
       </div>
     </section>
@@ -297,7 +305,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
-    <p class="footer-copy">© 2026 ForgeLabs</p>
+    <p class="footer-copy">© 2026 ForgeLab</p>
   </footer>
 
   <script src="script.js"></script>

@@ -1,4 +1,4 @@
-// Lightweight particle background + small UI helpers
+﻿// Lightweight particle background + small UI helpers
 const canvas = document.getElementById('particles');
 const ctx = canvas && canvas.getContext && canvas.getContext('2d');
 let particles = [];
@@ -62,17 +62,13 @@ if(canvas && ctx){start();}
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) lastFrameTime = performance.now(); });
 
 // Nav background toggles on once scrolled past the midpoint of the hero
-// Using IntersectionObserver with a small sentinel element at the hero midpoint
+// Using IntersectionObserver with a threshold that corresponds to ~50% of hero height
 (function(){
   var nav = document.querySelector('.nav');
   var hero = document.querySelector('.hero');
   if(!nav || !hero) return;
 
-  var useObserver = 'IntersectionObserver' in window;
-  var sentinel = null;
-  var observer = null;
-
-  // Scroll-based fallback
+  // Fallback scroll-based approach
   function checkNav(){
     var threshold = hero.offsetHeight * 0.5;
     if(window.scrollY > threshold){
@@ -82,12 +78,12 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) lastFra
     }
   }
 
-  // Setup IntersectionObserver
-  if(useObserver){
-    sentinel = document.createElement('div');
+  // Try IntersectionObserver with a small sentinel element at the hero midpoint
+  if('IntersectionObserver' in window){
+    var sentinel = document.createElement('div');
     sentinel.style.cssText = 'position:absolute;top:50%;left:0;width:1px;height:1px;pointer-events:none;';
     hero.appendChild(sentinel);
-    observer = new IntersectionObserver(function(entries){
+    var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           nav.classList.remove('scrolled');
@@ -97,38 +93,12 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) lastFra
       });
     }, {threshold: 0});
     observer.observe(sentinel);
-  } else {
-    // Fallback to scroll events if no IntersectionObserver
-    window.addEventListener('scroll', checkNav, {passive:true});
   }
 
-  // On resize, re-check after layout settles
-  var resizeTimer = null;
-  window.addEventListener('resize', function() {
-    if(resizeTimer) clearTimeout(resizeTimer);
-    // Use both immediate RAF check and a delayed check for safety
-    requestAnimationFrame(function(){
-      if(useObserver && observer && sentinel){
-        // Force observer to re-evaluate by briefly disconnecting and reconnecting
-        observer.disconnect();
-        observer.observe(sentinel);
-      } else {
-        checkNav();
-      }
-    });
-    // Double-check after layout is definitely stable
-    resizeTimer = setTimeout(function(){
-      if(useObserver && observer && sentinel){
-        observer.disconnect();
-        observer.observe(sentinel);
-      } else {
-        checkNav();
-      }
-    }, 100);
-  });
-
-  // Initial check
-  if(!useObserver) checkNav();
+  // Always run scroll fallback as well for reliability
+  window.addEventListener('scroll', checkNav, {passive:true});
+  window.addEventListener('resize', checkNav);
+  checkNav();
 })();
 function initCarousel(){
   const carousels = document.querySelectorAll('[data-carousel]');
@@ -356,7 +326,7 @@ function initCarousel(){
       }
         }
 
-    // Handle wheel/trackpad scrolling — instant 1:1, snap on rest.
+    // Handle wheel/trackpad scrolling â€” instant 1:1, snap on rest.
     // Captures ALL scroll events over the viewport and converts to horizontal.
     let wheelAccum = 0;
     let wheelSnapTimer = null;
@@ -379,32 +349,17 @@ function initCarousel(){
       pendingDelta = 0;
 
       const raw = wheelTranslateBase + wheelAccum;
-      let currentIdx = Math.round(raw / step);
-      
-      // Infinite scroll teleport: instantly jump when hitting clone boundaries
-      if(currentIdx < cloneCount){
-        // Scrolled into left clones - teleport to equivalent position at right
-        const offset = cloneCount - currentIdx;
-        currentIndex = cloneCount + originalCards.length - offset;
-        currentIdx = currentIndex;
-        wheelTranslateBase = currentIndex * step;
-        wheelAccum = 0;
-      } else if(currentIdx >= cloneCount + originalCards.length){
-        // Scrolled into right clones - teleport to equivalent position at left
-        const offset = currentIdx - (cloneCount + originalCards.length);
-        currentIndex = cloneCount + offset;
-        currentIdx = currentIndex;
-        wheelTranslateBase = currentIndex * step;
-        wheelAccum = 0;
-      }
-
-      const minTranslate = 0;
-      const maxTranslate = totalCards * step;
+      const minTranslate = step * cloneCount;
+      const maxTranslate = (totalCards - visibleCards) * step;
       const clamped = Math.min(Math.max(raw, minTranslate), maxTranslate);
+
+      // Rubber-band at boundaries: dampen overflow
+      if(raw !== clamped){ wheelAccum = clamped - wheelTranslateBase; }
 
       track.style.transform = `translate3d(-${clamped}px, 0, 0)`;
 
       // Update dots to reflect current scroll position
+      const currentIdx = Math.round(clamped / step);
       const totalOriginal = originalCards.length;
       const displayIdx = ((currentIdx - cloneCount) % totalOriginal + totalOriginal) % totalOriginal;
       const dots = Array.from(dotsContainer.children);
@@ -412,7 +367,7 @@ function initCarousel(){
       dots.forEach((dot, i) => { dot.classList.toggle('active', i === activeDot); });
     }
     function handleWheel(event){
-      // Prevent page scroll — all scroll over the carousel goes horizontal
+      // Prevent page scroll â€” all scroll over the carousel goes horizontal
       event.preventDefault();
 
       let delta = event.deltaX;
@@ -431,9 +386,7 @@ function initCarousel(){
         const step = getCardStep();
         const finalPos = wheelTranslateBase + wheelAccum;
         const nearestIdx = Math.round(finalPos / step);
-        const total = allCards.length;
-        const visible = getVisibleCards();
-        currentIndex = Math.max(cloneCount, Math.min(nearestIdx, total - visible));
+        currentIndex = Math.max(cloneCount, Math.min(nearestIdx, totalCards - visibleCards));
         wheelAccum = 0;
         pendingDelta = 0;
         track.style.transition = `transform ${TRANSITION_MS}ms cubic-bezier(.22,1,.36,1)`;
@@ -463,6 +416,20 @@ function initCarousel(){
   });
 }
 
+// Allow vertical page scrolling when wheeling over the fixed navbar
+(function(){
+  const navEl = document.querySelector('.nav');
+  if(!navEl) return;
+  navEl.addEventListener('wheel', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var dy = e.deltaY;
+    if(e.deltaMode === 1) dy *= 16;
+    if(e.deltaMode === 2) dy *= 800;
+    window.scrollBy(0, dy);
+  }, {passive: false});
+})();
+
 // Mobile nav toggle
 function toggleNav(){
   const links = document.querySelector('.nav-links');
@@ -478,9 +445,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     }
   })
 });
-
-// Contact form handler with FormSubmit.co
-// No JavaScript needed - form submits directly to FormSubmit
-// First submission will require email verification, then works automatically
 
 document.addEventListener('DOMContentLoaded', initCarousel);
