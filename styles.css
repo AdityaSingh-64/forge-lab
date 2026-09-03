@@ -202,7 +202,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 
 /* Tablet / small screens */
 @media (max-width:900px){
-  .nav .logo img, .nav .nav-logo{height:68px; max-height:68px}
+  .nav .logo img, .nav .nav-logo{height:108px; max-height:108px}
   /* Logo fades in when navbar gets its scrolled background */
   .nav .logo{opacity:0;transition:opacity .45s ease;pointer-events:none}
   .nav.scrolled .logo{opacity:1;pointer-events:auto}
@@ -210,12 +210,12 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 
 /* Small phones */
 @media (max-width:600px){
-  .nav .logo img, .nav .nav-logo{height:58px; max-height:58px}
+  .nav .logo img, .nav .nav-logo{height:92px; max-height:92px}
 }
 
 /* Extra small phones */
 @media (max-width:480px){
-  .nav .logo img, .nav .nav-logo{height:48px; max-height:48px}
+  .nav .logo img, .nav .nav-logo{height:78px; max-height:78px}
 }
 .nav .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:18px;align-items:center}
 .nav .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;transition:color .25s ease}
