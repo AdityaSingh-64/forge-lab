@@ -2,6 +2,11 @@
 const canvas = document.getElementById('particles');
 const ctx = canvas && canvas.getContext && canvas.getContext('2d');
 let particles = [];
+// Particle color adapts to current theme
+function getParticleColor(alpha){
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  return isLight ? `rgba(26,32,44,${alpha})` : `rgba(255,255,255,${alpha})`;
+}
 function resize(){
   if(!canvas) return;
   canvas.width = canvas.clientWidth;
@@ -31,7 +36,7 @@ function draw(now){
     if(p.y<0) p.y = canvas.height; if(p.y>canvas.height) p.y = 0;
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+    ctx.fillStyle = getParticleColor(p.alpha);
     ctx.fill();
   }
   requestAnimationFrame(draw);
@@ -656,6 +661,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   })
 });
 
+// Close mobile nav when tapping outside the menu or hamburger
+document.addEventListener('click', function(e){
+  const links = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  if(!links || !links.classList.contains('active')) return;
+  // If click is inside the menu panel or on the hamburger, do nothing
+  if(links.contains(e.target) || (hamburger && hamburger.contains(e.target))) return;
+  closeNav();
+});
+
+// Close mobile nav on Escape key
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeNav();
+});
+
 // Contact form handler with FormSubmit.co
 // No JavaScript needed - form submits directly to FormSubmit
 // First submission will require email verification, then works automatically
@@ -786,3 +806,88 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 
 
 document.addEventListener('DOMContentLoaded', initCarousel);
+
+
+// ========================================
+// SCROLL-SPY: highlight the nav link for the section currently in view.
+// At the top of the page (hero) no link is highlighted, so "Projects" can
+// only ever appear active while actually viewing the Projects section.
+// ========================================
+(function(){
+  var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  if(!navLinks.length) return;
+
+  // Map each tracked section id to its corresponding nav link.
+  var linkBySection = {};
+  navLinks.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    if(id) linkBySection[id] = a;
+  });
+
+  var sections = Object.keys(linkBySection)
+    .map(function(id){ return document.getElementById(id); })
+    .filter(Boolean);
+  if(!sections.length) return;
+
+  var ticking = false;
+  // Must exceed section scroll-margin-top (100px + safe-area-inset) so that
+  // the last section is picked up after the browser scrolls to its anchor.
+  var NAV_OFFSET = 110;
+
+  function updateActive(){
+    ticking = false;
+    var activeId = null;
+    // When the page is scrolled to (or near) the very bottom, the last
+    // section is the one in view — its top can never reach NAV_OFFSET because
+    // there isn't enough scrollable space below it (the footer caps it).
+    var nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40;
+    if(nearBottom){
+      activeId = sections[sections.length - 1].id;
+    } else {
+      // Iterate top-down; the last section whose top has crossed the offset
+      // line is the one currently in view (sections stack in DOM order).
+      for(var i = sections.length - 1; i >= 0; i--){
+        if(sections[i].getBoundingClientRect().top <= NAV_OFFSET){
+          activeId = sections[i].id;
+          break;
+        }
+      }
+    }
+    navLinks.forEach(function(a){ a.classList.remove('active'); });
+    if(activeId && linkBySection[activeId]){
+      linkBySection[activeId].classList.add('active');
+    }
+  }
+
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(updateActive);
+    }
+  }, {passive:true});
+  window.addEventListener('resize', updateActive, {passive:true});
+
+  updateActive();
+})();
+
+
+// ========================================
+// DARK / LIGHT MODE TOGGLE
+// ========================================
+function toggleTheme(){
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch(e){}
+}
+// Listen for OS-level theme changes (only applies when user hasn't explicitly chosen)
+(function(){
+  try {
+    const stored = localStorage.getItem('theme');
+    if(stored) return; // user has a preference, respect it
+  } catch(e){}
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e){
+    document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+  });
+})();
