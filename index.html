@@ -8,9 +8,44 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <title>ForgeLab — Forging Next‑Gen Products</title>
-  <link rel="stylesheet" href="styles.css?v=27" />
+  <script>
+    // FOUC prevention: apply saved theme before first paint
+    (function(){
+      var t = localStorage.getItem('theme');
+      if(!t) t = window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=34" />
 </head>
 <body>
+  <!-- Hidden SVG filter: adapts white+accent logos for light mode without losing the orange "Lab".
+       Darkens near-white pixels to #1a202c while leaving colored (accent) pixels untouched. -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="logo-adapt" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+        <feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="lum"/>
+        <!-- Threshold: luminance >= 0.7 counts as "white" -->
+        <feComponentTransfer in="lum" result="thresh">
+          <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 1 1 1"/>
+        </feComponentTransfer>
+        <!-- Restrict the white mask to opaque original pixels (multiply by source alpha) -->
+        <feComposite in="thresh" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="whitemask"/>
+        <!-- Darken the whole source to the light-mode text color #1a202c -->
+        <feColorMatrix in="SourceGraphic" type="matrix"
+          values="0 0 0 0 0.102
+                  0 0 0 0 0.125
+                  0 0 0 0 0.173
+                  0 0 0 1 0" result="dark"/>
+        <feComposite in="dark" in2="whitemask" operator="in" result="dark-text"/>
+        <feComposite in="SourceGraphic" in2="whitemask" operator="out" result="color-text"/>
+        <feMerge>
+          <feMergeNode in="color-text"/>
+          <feMergeNode in="dark-text"/>
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
   <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav">
     <a class="logo" href="#home">
@@ -23,6 +58,18 @@
       <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
     <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+    <div class="theme-toggle-wrapper">
+      <button class="theme-toggle" type="button" aria-label="Toggle dark/light mode" onclick="toggleTheme()">
+        <!-- Moon icon (shown in dark mode — click to switch to light) -->
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <!-- Sun icon (shown in light mode — click to switch to dark) -->
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <div class="theme-hint" aria-hidden="true">
+        <div class="theme-hint-arrow"></div>
+        <span>Light mode</span>
+      </div>
+    </div>
     <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
   </nav>
 
@@ -33,9 +80,9 @@
     </div>
     <div class="hero-inner">
       <div class="hero-content" data-reveal="scale">
-        <img src="assets/logo-nobg-hq.png" alt="ForgeLab" class="hero-logo" />
+        <img src="assets/logo-nobg-hq_upscayl_5x_digital-art-4x.png" alt="ForgeLab" class="hero-logo" />
         <h1>We forge ideas into products that ship.</h1>
-        <p class="tagline">ForgeLab is a two-founder digital agency building websites, web apps, digital marketing, and design for growing businesses.</p>
+        <p class="tagline">ForgeLab is a two‑founder studio that runs like an agency — building websites, web apps, digital marketing, and design for growing businesses.</p>
         <div class="hero-actions">
           <a class="btn" href="#projects">Our Work</a>
           <a class="btn ghost" href="#contact">Start a project</a>
@@ -53,7 +100,7 @@
       <div class="container" data-reveal-group>
         <p class="eyebrow">01 — The studio</p>
         <h2>About ForgeLab</h2>
-        <p>ForgeLab is a product studio that blends engineering and design to build delightful digital experiences. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
+        <p>ForgeLab is a product studio that blends engineering and design to build delightful digital experiences — but we run like an agency, with a two‑founder team and direct ownership on every project. We ship web and mobile apps, design systems and brand-aligned interfaces.</p>
         <p>We are built on a simple bet: most digital work suffers from too many hands and not enough ownership. We keep teams small, keep decisions close to the work, and cover the full stack a growing business actually needs — sites, apps, marketing, and design — so it all feels like one team instead of four vendors stitched together.</p>
       </div>
     </section>
@@ -91,7 +138,7 @@
 
               <article class="service-card">
                 <div class="service-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M4 18V7.5A1.5 1.5 0 0 1 5.5 6H18.5A1.5 1.5 0 0 1 20 7.5V18M7 10h10M8 15h5M7 6V4m10 2V4"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1 -8 0"/></svg>
                 </div>
                 <div class="service-body">
                   <h3>E-Commerce Development</h3>
@@ -108,7 +155,7 @@
 
               <article class="service-card service-card-featured">
                 <div class="service-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M18 7.5c1.7 0 3 1.3 3 3v5.5c0 1.7-1.3 3-3 3H6c-1.7 0-3-1.3-3-3V10.5c0-1.7 1.3-3 3-3h12Zm-3 6.5h3m-9 0h3M7 5l1.5-2h7L17 5"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 13v-2zM11.6 16.8a3 3 0 1 1 -5.8 -1.6"/></svg>
                 </div>
                 <div class="service-body">
                   <h3>Digital Marketing</h3>
@@ -126,7 +173,7 @@
 
               <article class="service-card">
                 <div class="service-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M4 19.5V9.5L12 4l8 5.5v10M7 15.5l5-5 5 5M9 18.5h6"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
                 </div>
                 <div class="service-body">
                   <h3>UI/UX Design</h3>
@@ -143,7 +190,7 @@
 
               <article class="service-card">
                 <div class="service-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M7 7.5c0-1.7 1.3-3 3-3h4c1.7 0 3 1.3 3 3v9c0 1.7-1.3 3-3 3h-4c-1.7 0-3-1.3-3-3v-9Zm4 5h2m-1-3v6"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
                 </div>
                 <div class="service-body">
                   <h3>Branding &amp; Graphic Design</h3>
@@ -203,7 +250,7 @@
                 <img class="project-thumb" src="assets/projects/mobile-checkout-ui.png" alt="E-Commerce Checkout System project preview" decoding="async" />
                 <div class="project-content">
                   <h4>E-Commerce Checkout System</h4>
-                  <p>Developed a responsive and user-friendly checkout interface featuring multi-step checkout, shipping and payment options, coupon discounts, dynamic order summaries, tax calculations, and secure payment UI.</p>
+                  <p>Developed a responsive, user-friendly checkout flow featuring multi-step navigation, shipping and payment options, coupon discounts, dynamic order summaries, tax calculations, and secure payment UI.</p>
                   <ul class="project-skills">
                     <li>HTML5</li>
                     <li>CSS3</li>
@@ -250,7 +297,7 @@
                 <img class="project-thumb" src="assets/projects/storefront-merchant-analytics.png" alt="Shopify E-Commerce Store project preview" decoding="async" />
                 <div class="project-content">
                   <h4>Shopify E-Commerce Store</h4>
-                  <p>Designed and customized a modern, responsive Shopify storefront with custom Liquid sections, product collections, responsive UI, and an optimized shopping experience. Configured and managed products, collections, navigation, and essential e-commerce functionality through Shopify.</p>
+                  <p>Designed and customized a modern, adaptive Shopify storefront with custom Liquid sections, product collections, responsive UI, and an optimized shopping experience. Configured and managed products, collections, navigation, and essential e-commerce functionality through Shopify.</p>
                   <ul class="project-skills">
                     <li>Shopify</li>
                     <li>Liquid</li>
@@ -307,7 +354,7 @@
               <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <h3>Skin in the Game</h3>
-            <p>As a two-founder studio, our name is on every project we ship — a different level of care than a subcontracted dev shop.</p>
+            <p>As a two-founder studio, our name is on every project we ship. That's a different level of care than a subcontracted dev shop.</p>
           </div>
         </div>
       </div>
@@ -326,8 +373,8 @@
       <div class="container" data-reveal-group>
         <p class="eyebrow">05 — Get in touch</p>
         <h2>Contact</h2>
-        <p>Let's build something together. Email: <a class="email-link" href="mailto:hello@theforgelab.in">hello@theforgelab.in</a></p>
-        <form class="contact-form" id="contactForm" action="https://formsubmit.co/hello@theforgelab.in" method="POST">
+        <p>Let's build something together. Email: <a class="email-link" href="mailto:team@theforgelab.in">team@theforgelab.in</a></p>
+        <form class="contact-form" id="contactForm" action="https://formsubmit.co/team@theforgelab.in" method="POST">
           <!-- FormSubmit Configuration -->
           <input type="hidden" name="_subject" value="New Contact from ForgeLab Website">
           <input type="hidden" name="_captcha" value="false">
@@ -364,6 +411,6 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
   </button>
 
-  <script src="script.js?v=25"></script>
+  <script src="script.js?v=28"></script>
 </body>
 </html>
