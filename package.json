@@ -4,7 +4,8 @@
   "description": "ForgeLab - Forging Next-Gen Products",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "sync-blog": "node scripts/sync-blog.js"
   },
   "keywords": [],
   "author": "",
