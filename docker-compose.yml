@@ -1,0 +1,37 @@
+# Optional alternative to Local WP. The recommended setup is Local
+# (https://localwp.com) — this file is only if you prefer Docker.
+#
+#   docker compose up -d
+#   open http://localhost:8080
+#
+# Then sync with:
+#   WP_URL=http://localhost:8080 npm run sync-blog
+
+services:
+  wordpress:
+    image: wordpress:6.6
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  wordpress_data:
+  db_data:

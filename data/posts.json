@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-09-15T17:38:44.647Z",
+  "source": "http://forgelab.local",
+  "posts": [
+    {
+      "id": 11,
+      "slug": "hello-word",
+      "title": "hello word",
+      "date": "2026-09-15T17:25:24",
+      "dateLabel": "15 September 2026",
+      "category": "article",
+      "excerpt": "welcome to my world",
+      "image": null,
+      "url": "blog/hello-word/"
+    },
+    {
+      "id": 6,
+      "slug": "hello-from-forgelab",
+      "title": "hello from forgelab",
+      "date": "2026-09-15T16:57:37",
+      "dateLabel": "15 September 2026",
+      "category": "article",
+      "excerpt": "ForgeLab is where ideas get built, tested, and shipped. This is a space for hands-on notes on building products, writing code, and figuring things out — part build log, part newsletter, part running commentary on what actually works. Fewer polished takes, more real progress.",
+      "image": "assets/blog/hello-from-forgelab-aHR0cDovL2.png",
+      "url": "blog/hello-from-forgelab/"
+    },
+    {
+      "id": 1,
+      "slug": "hello-world",
+      "title": "Hello world!",
+      "date": "2026-09-15T16:45:22",
+      "dateLabel": "15 September 2026",
+      "category": "article",
+      "excerpt": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "image": null,
+      "url": "blog/hello-world/"
+    }
+  ]
+}
