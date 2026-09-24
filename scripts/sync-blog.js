@@ -259,7 +259,6 @@ function renderPostPage(post) {
         <p class="eyebrow">ForgeLab / ${label}</p>
         <p class="blog-post-meta">${escapeHtml(post.dateLabel)} · ${label}</p>
         <h1>${escapeHtml(post.title)}</h1>
-        ${post.excerpt ? `<p class="blog-post-dek">${escapeHtml(post.excerpt)}</p>` : ''}
         ${image}
       </div>
       <div class="container blog-prose" data-reveal>
