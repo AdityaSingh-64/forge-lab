@@ -49,7 +49,11 @@ function start(){
   requestAnimationFrame(draw);
 }
 
-window.addEventListener('resize', ()=>{resize(); makeParticles( Math.round((canvas.width*canvas.height)/90000) ); });
+window.addEventListener('resize', ()=>{
+  if(!canvas) return;
+  resize();
+  makeParticles(Math.round((canvas.width*canvas.height)/90000));
+});
 if(canvas && ctx){start();}
 
 // Pause particle canvas when hero is off-screen to save CPU
