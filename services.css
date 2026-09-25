@@ -569,3 +569,171 @@
   .brand-service-card{transition:none}
   .brand-service-card:hover{transform:none;box-shadow:none}
 }
+
+
+/* ========================================
+   MAINTENANCE & SUPPORT SERVICES PAGE
+   Reliability dashboard and care-plan visual language
+   ======================================== */
+.maintenance-page .service-hero h1{max-width:15ch}
+.maintenance-hero .container{padding-top:64px;padding-bottom:58px}
+.maintenance-hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(350px,.92fr);align-items:center;gap:54px}
+.maintenance-hero-copy{max-width:740px}
+.maintenance-hero-copy .section-intro{margin-bottom:0}
+.maintenance-hero-copy .service-lede{max-width:700px}
+.maintenance-hero-copy .service-hero-actions{margin-top:28px}
+.maintenance-hero-points{margin-top:24px}
+.maintenance-status-card{position:relative;overflow:hidden;border:1px solid rgba(232,96,76,.34);border-radius:22px;background:linear-gradient(145deg,rgba(232,96,76,.16),rgba(245,166,35,.08) 45%,var(--surface-card));box-shadow:0 30px 90px var(--shadow-card-hover)}
+.maintenance-status-card::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2),transparent)}
+.maintenance-status-top,.maintenance-status-metrics{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;color:var(--text-faint);font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.maintenance-status-top{border-bottom:1px solid var(--border-default)}
+.maintenance-live{color:#8ce9c2;white-space:nowrap}
+.maintenance-live i{display:inline-block;width:6px;height:6px;margin:0 7px 1px 0;border-radius:50%;background:#6ee7b7;box-shadow:0 0 0 4px rgba(110,231,183,.1)}
+.maintenance-status-main{position:relative;min-height:310px;padding:34px 28px 30px;background:radial-gradient(circle at 84% 24%,rgba(245,166,35,.18),transparent 31%),linear-gradient(145deg,rgba(7,17,36,.18),transparent 72%)}
+.maintenance-status-kicker{display:block;margin-bottom:12px;color:var(--accent-1);font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.maintenance-status-main h2{position:relative;z-index:1;margin:0 0 12px;color:var(--text-bright);font-size:clamp(1.8rem,3.2vw,2.65rem);line-height:1.12;letter-spacing:-.04em}
+.maintenance-status-main p{position:relative;z-index:1;max-width:330px;margin:0;color:var(--text-body);font-size:.95rem;line-height:1.7}
+.maintenance-orbit{position:absolute;right:-18px;bottom:-28px;width:220px;height:220px;opacity:.85;pointer-events:none}
+.maintenance-orbit-ring{position:absolute;inset:0;border:1px solid rgba(245,166,35,.3);border-radius:50%;transform:rotate(-25deg) scaleY(.52)}
+.maintenance-orbit-ring-two{inset:25px;border-color:rgba(232,96,76,.38);transform:rotate(48deg) scaleY(.52)}
+.maintenance-orbit-core{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:58px;height:58px;margin:-29px;border:1px solid rgba(245,166,35,.7);border-radius:50%;background:linear-gradient(145deg,rgba(232,96,76,.9),rgba(245,166,35,.5));color:#071124;font-size:2.2rem;font-weight:800;line-height:1;box-shadow:0 0 0 12px rgba(245,166,35,.06),0 0 42px rgba(232,96,76,.2)}
+.maintenance-orbit-dot{position:absolute;width:10px;height:10px;border:2px solid var(--bg-2);border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px rgba(245,166,35,.12)}
+.maintenance-orbit-dot-one{left:20px;top:58px}
+.maintenance-orbit-dot-two{right:19px;bottom:61px;background:var(--accent-1);box-shadow:0 0 0 4px rgba(232,96,76,.12)}
+.maintenance-status-metrics{border-top:1px solid var(--border-default)}
+.maintenance-status-metrics div{display:flex;flex-direction:column;gap:4px}
+.maintenance-status-metrics strong{color:var(--accent-2);font-size:1.15rem;letter-spacing:0}
+.maintenance-status-metrics span{color:var(--text-faint);font-size:.58rem;letter-spacing:.1em}
+.maintenance-section-heading{max-width:820px;margin-bottom:28px}
+.maintenance-section-heading .eyebrow{margin:0 0 10px;color:var(--accent-1);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.maintenance-section-heading h2{margin:0 0 12px;background:var(--section-heading-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.maintenance-section-heading>p:last-child{margin:0;color:var(--text-body);font-size:1.02rem;line-height:1.75}
+.maintenance-intro-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:72px;align-items:start}
+.maintenance-intro-copy{padding-top:5px}
+.maintenance-intro-copy p{margin:0 0 14px;color:var(--text-body);font-size:1rem;line-height:1.8}
+.maintenance-intro-copy p:last-child{margin-bottom:0}
+.maintenance-service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.maintenance-service-card{display:flex;flex-direction:column;min-height:255px;padding:22px 20px 20px;border:1px solid var(--border-faint);border-radius:16px;background:var(--surface-card);transition:transform .55s var(--ease-spring),box-shadow .55s var(--ease-spring),border-color .4s ease}
+.maintenance-service-card-featured{grid-column:span 2;background:linear-gradient(145deg,rgba(232,96,76,.15),rgba(245,166,35,.06) 55%,var(--surface-card))}
+.maintenance-service-card-wide{grid-column:span 4;min-height:0;display:grid;grid-template-columns:minmax(140px,.5fr) minmax(0,1fr) minmax(0,1.5fr) auto;align-items:center;gap:24px;padding:24px 22px;background:linear-gradient(120deg,rgba(232,96,76,.12),var(--surface-card) 66%)}
+.maintenance-service-card-wide .maintenance-service-number{margin-bottom:0}
+.maintenance-service-card-wide h3{margin-bottom:0}
+.maintenance-service-card-wide>span:last-child{margin-top:0;padding-top:0;white-space:nowrap}
+.maintenance-service-number{margin-bottom:35px;color:var(--accent-1);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.maintenance-service-card h3{margin:0 0 10px;color:var(--text-bright);font-size:1.1rem;line-height:1.3}
+.maintenance-service-card p{margin:0;color:var(--text-body);font-size:.9rem;line-height:1.7}
+.maintenance-service-card>span:last-child{margin-top:auto;padding-top:20px;color:var(--accent-2);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.maintenance-approach-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 30px;border-top:1px solid var(--border-default)}
+.maintenance-approach-item{padding:24px 0 22px;border-bottom:1px solid var(--border-faint)}
+.maintenance-approach-index{display:block;margin-bottom:44px;color:var(--accent-1);font-size:.7rem;font-weight:900;letter-spacing:.15em}
+.maintenance-approach-item h3{margin:0 0 9px;color:var(--text-bright);font-size:1.08rem;line-height:1.3}
+.maintenance-approach-item p{margin:0;color:var(--text-body);font-size:.9rem;line-height:1.7}
+.maintenance-platforms-grid{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);gap:70px;align-items:start}
+.maintenance-platform-list{border-top:1px solid var(--border-default)}
+.maintenance-platform-item{display:grid;grid-template-columns:minmax(130px,.7fr) minmax(0,1.3fr);gap:22px;padding:18px 0;border-bottom:1px solid var(--border-faint)}
+.maintenance-platform-item strong{color:var(--text-bright);font-size:.9rem;line-height:1.5}
+.maintenance-platform-item span{color:var(--text-body);font-size:.88rem;line-height:1.6}
+.maintenance-process-list{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px;margin:0;padding:0;list-style:none}
+.maintenance-process-list::before{content:"";position:absolute;left:24px;right:24px;top:22px;height:1px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2),transparent)}
+.maintenance-process-step{position:relative;display:grid;grid-template-columns:44px 1fr;gap:16px;padding-top:0}
+.maintenance-process-index{position:relative;z-index:1;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(232,96,76,.55);border-radius:50%;background:var(--surface-card);color:var(--accent-1);font-size:.72rem;font-weight:900;letter-spacing:.04em}
+.maintenance-process-step h3{margin:7px 0 8px;color:var(--text-bright);font-size:1.05rem;line-height:1.3}
+.maintenance-process-step p{margin:0;color:var(--text-body);font-size:.9rem;line-height:1.7}
+.maintenance-model-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.maintenance-model-card{display:flex;flex-direction:column;min-height:330px;padding:24px 22px 20px;border:1px solid var(--border-faint);border-radius:18px;background:var(--surface-card);transition:transform .55s var(--ease-spring),box-shadow .55s var(--ease-spring),border-color .4s ease}
+.maintenance-model-card-featured{border-color:rgba(232,96,76,.45);background:linear-gradient(145deg,rgba(232,96,76,.16),rgba(245,166,35,.06) 58%,var(--surface-card))}
+.maintenance-model-label{margin-bottom:42px;color:var(--accent-1);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.maintenance-model-card h3{margin:0 0 10px;color:var(--text-bright);font-size:1.25rem;line-height:1.25}
+.maintenance-model-card p{margin:0;color:var(--text-body);font-size:.92rem;line-height:1.7}
+.maintenance-model-card ul{display:flex;flex-direction:column;gap:9px;margin:20px 0 0;padding:0;list-style:none}
+.maintenance-model-card li{position:relative;padding-left:20px;color:var(--text-body);font-size:.86rem;line-height:1.5}
+.maintenance-model-card li::before{content:"✓";position:absolute;left:0;top:0;color:var(--accent-2);font-weight:800}
+.maintenance-model-caption{margin-top:auto;padding-top:24px;color:var(--text-faint);font-size:.78rem;line-height:1.5}
+.maintenance-model-note{margin:18px 0 0;color:var(--text-faint);font-size:.82rem;line-height:1.65}
+.maintenance-benefit-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.maintenance-benefit-item{padding:24px 20px 22px;border-top:1px solid var(--border-default);background:linear-gradient(180deg,var(--surface-card),transparent)}
+.maintenance-benefit-mark{display:grid;place-items:center;width:42px;height:42px;margin-bottom:34px;border:1px solid rgba(245,166,35,.4);border-radius:13px;color:var(--accent-2);font-size:1.35rem;font-weight:700}
+.maintenance-benefit-item h3{margin:0 0 9px;color:var(--text-bright);font-size:1.05rem;line-height:1.3}
+.maintenance-benefit-item p{margin:0;color:var(--text-body);font-size:.9rem;line-height:1.7}
+.maintenance-faq-section .svc-faq-list{max-width:920px}
+.maintenance-faq-section .svc-faq summary{padding:18px 20px}
+.maintenance-faq-section .svc-faq p{padding:0 20px 20px}
+.maintenance-cta{position:relative;overflow:hidden}
+.maintenance-cta .eyebrow{margin:0 0 12px;color:var(--accent-2)}
+.maintenance-cta h2{max-width:800px}
+.maintenance-cta>p:not(.eyebrow){max-width:760px}
+.maintenance-related-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+
+
+
+
+@media (max-width:1100px){
+  .maintenance-hero-grid{gap:32px}
+  .maintenance-intro-grid{gap:42px}
+  .maintenance-platforms-grid{gap:42px}
+  .maintenance-service-card{min-height:270px}
+  .maintenance-process-list{gap:0 18px}
+  .maintenance-approach-item p{font-size:.86rem}
+}
+@media (max-width:820px){
+  .maintenance-hero .container{padding-top:48px;padding-bottom:42px}
+  .maintenance-hero-grid,.maintenance-intro-grid,.maintenance-platforms-grid{grid-template-columns:1fr}
+  .maintenance-status-card{max-width:560px}
+  .maintenance-intro-copy{padding-top:0}
+  .maintenance-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .maintenance-service-card-featured{grid-column:span 1}
+  .maintenance-service-card-wide{grid-column:1 / -1;display:flex;min-height:0;padding:22px 20px}
+  .maintenance-service-card-wide .maintenance-service-number{margin-bottom:32px}
+  .maintenance-service-card-wide h3{margin-bottom:10px}
+  .maintenance-service-card-wide>span:last-child{margin-top:auto;padding-top:20px}
+  .maintenance-approach-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .maintenance-process-list{grid-template-columns:1fr;gap:0}
+  .maintenance-process-list::before{left:22px;right:auto;top:22px;bottom:22px;width:1px;height:auto;background:linear-gradient(180deg,var(--accent-1),var(--accent-2),transparent)}
+  .maintenance-process-step{padding:18px 0}
+  .maintenance-process-index{width:44px;height:44px}
+  .maintenance-model-grid{grid-template-columns:1fr}
+  .maintenance-model-card{min-height:0}
+  .maintenance-benefit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .maintenance-related-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .maintenance-page .service-hero h1{font-size:clamp(2.15rem,11vw,3.1rem)}
+  .maintenance-hero-grid{gap:30px}
+  .maintenance-status-main{min-height:270px;padding:28px 20px 24px}
+  .maintenance-orbit{right:-52px;bottom:-42px;transform:scale(.82);transform-origin:bottom right}
+  .maintenance-service-grid,.maintenance-approach-grid,.maintenance-benefit-grid{grid-template-columns:1fr;gap:0}
+  .maintenance-service-card{min-height:0;padding:20px 18px}
+  .maintenance-service-number{margin-bottom:26px}
+  .maintenance-approach-item{padding:20px 0}
+  .maintenance-approach-index{margin-bottom:22px}
+  .maintenance-benefit-item{padding:20px 0}
+  .maintenance-benefit-mark{margin-bottom:22px}
+  .maintenance-platform-item{grid-template-columns:1fr;gap:7px;padding:17px 0}
+  .maintenance-platform-item span{font-size:.84rem}
+  .maintenance-process-step{grid-template-columns:34px 1fr;gap:11px;padding:20px 0}
+  .maintenance-process-list::before{left:17px;top:20px;bottom:20px}
+  .maintenance-process-index{width:34px;height:34px;font-size:.62rem}
+  .maintenance-process-step h3{margin-top:2px}
+  .maintenance-model-card{padding:21px 18px}
+  .maintenance-model-label{margin-bottom:28px}
+  .maintenance-faq-section .svc-faq summary{padding:16px 18px}
+  .maintenance-faq-section .svc-faq p{padding:0 18px 18px}
+  .maintenance-cta{padding:26px 18px}
+}
+[data-theme="light"] .maintenance-status-card{background:linear-gradient(145deg,rgba(232,96,76,.14),rgba(245,166,35,.1) 45%,rgba(255,255,255,.96));box-shadow:0 24px 60px rgba(232,96,76,.12)}
+[data-theme="light"] .maintenance-service-card,
+[data-theme="light"] .maintenance-model-card,
+[data-theme="light"] .maintenance-benefit-item{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,244,240,.72));border-color:var(--border-default)}
+[data-theme="light"] .maintenance-service-card-featured,
+[data-theme="light"] .maintenance-model-card-featured{background:linear-gradient(145deg,rgba(232,96,76,.12),rgba(255,255,255,.96) 72%);border-color:rgba(232,96,76,.28)}
+[data-theme="light"] .maintenance-platform-list,
+[data-theme="light"] .maintenance-approach-grid{border-color:var(--border-default)}
+@media (hover:hover) and (pointer:fine){
+  .maintenance-service-card:hover,.maintenance-model-card:hover{transform:translateY(-6px);border-color:rgba(232,96,76,.42);box-shadow:0 24px 50px var(--shadow-card-hover)}
+}
+@media (prefers-reduced-motion:reduce){
+  .maintenance-service-card,.maintenance-model-card{transition:none}
+  .maintenance-service-card:hover,.maintenance-model-card:hover{transform:none;box-shadow:none}
+}
+
