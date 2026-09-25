@@ -737,3 +737,26 @@
   .maintenance-service-card:hover,.maintenance-model-card:hover{transform:none;box-shadow:none}
 }
 
+
+/* Digital marketing visual language */
+.digital-marketing-hero .container { padding-top: 64px; padding-bottom: 58px; }
+.digital-marketing-hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr); align-items: center; gap: 52px; }
+.digital-marketing-snapshot { position: relative; overflow: hidden; border: 1px solid rgba(232, 96, 76, 0.34); border-radius: 22px; background: linear-gradient(145deg, rgba(232, 96, 76, 0.18), rgba(245, 166, 35, 0.1) 44%, var(--surface-card)); box-shadow: 0 30px 90px var(--shadow-card-hover); }
+.snapshot-top { padding: 12px 14px; font-size: 0.58rem; border-bottom: 1px solid rgba(232, 96, 76, 0.2); display: flex; justify-content: space-between; }
+.snapshot-status { color: var(--accent-1); }
+.snapshot-main { min-height: 260px; padding: 26px 20px 22px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.snapshot-chart { width: 88px; height: 88px; display: flex; align-items: flex-end; gap: 4px; }
+.snapshot-chart i { width: 20px; background: var(--accent-1); border-radius: 4px; }
+.snapshot-chart i:nth-child(1) { height: 40%; }
+.snapshot-chart i:nth-child(2) { height: 70%; }
+.snapshot-chart i:nth-child(3) { height: 90%; }
+.snapshot-metric { font-size: 3rem; font-weight: 700; margin-top: 16px; }
+.snapshot-caption { color: var(--text-body); font-size: 0.9rem; margin-top: 8px; }
+
+
+
+@media (max-width:600px) {
+  .digital-marketing-hero-grid { grid-template-columns: 1fr; gap: 30px; }
+  .digital-marketing-snapshot { max-width: 560px; }
+  .snapshot-main { min-height: 270px; padding: 28px 20px 24px; }
+}
