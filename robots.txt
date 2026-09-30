@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block nothing — all pages are public and indexable.
+# No critical resources (CSS, JS, images) are disallowed.
+
+Sitemap: https://theforgelab.in/sitemap.xml
