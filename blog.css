@@ -52,7 +52,7 @@
 .blog-empty code{color:var(--accent-1)}
 
 .blog-subscribe{margin-top:48px;max-width:560px;padding:24px;border:1px solid var(--border-default);border-radius:16px;background:var(--surface-card)}
-.blog-subscribe h3{margin:0 0 8px;font-size:1.25rem}
+.blog-subscribe h2{margin:0 0 8px;font-size:1.25rem}
 .blog-subscribe p{margin:0 0 16px;color:var(--text-body)}
 
 .blog-post-header{max-width:800px}
