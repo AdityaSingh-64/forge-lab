@@ -251,7 +251,7 @@ function renderPostPage(post) {
     title: post.title + ' — ForgeLab',
     description: post.excerpt || post.title,
     root,
-    extraCss: root + 'blog.css?v=1',
+    extraCss: root + 'blog.css?v=4',
     bodyClass: 'page-blog page-blog-post',
     content: `  <main class="blog-main">
     <article class="section blog-post">
@@ -277,7 +277,7 @@ function renderListingPage() {
     title: 'Blog — ForgeLab',
     description: 'Articles and newsletters from the ForgeLab studio.',
     root: '../',
-    extraCss: '../blog.css?v=1',
+    extraCss: '../blog.css?v=4',
     extraJs: '../blog.js?v=1',
     bodyClass: 'page-blog',
     content: `  <main class="blog-main">
@@ -297,8 +297,8 @@ function renderListingPage() {
         <p id="blog-empty" class="blog-empty" hidden>No posts in this category yet.</p>
         <p id="blog-setup" class="blog-empty">Our first insights are coming soon.</p>
         <form class="contact-form blog-subscribe" id="newsletterForm" action="https://formsubmit.co/team@theforgelab.in" method="POST">
-          <h3>Get new issues</h3>
-          <p>Drop your email and we will send new articles and newsletters. Free — no WordPress plan required.</p>
+          <h3>Get the latest updates</h3>
+          <p>Drop your email and we will send new articles and newsletters.</p>
           <input type="hidden" name="_subject" value="ForgeLab newsletter signup">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="box">
