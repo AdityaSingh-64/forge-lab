@@ -97,3 +97,122 @@
   background:rgba(255,255,255,0.92);
 }
 [data-theme="light"] .blog-filter{background:rgba(255,255,255,0.92)}
+
+/* Step-by-step layout & conversion article components */
+.blog-tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px}
+.blog-tag{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:0.02em;background:var(--surface-card);border:1px solid var(--border-subtle);color:var(--text-faint)}
+
+.blog-steps{display:flex;flex-direction:column;gap:24px;margin:32px 0}
+.blog-step-card{
+  background:var(--surface-card);border:1px solid var(--border-subtle);
+  border-radius:20px;padding:26px 30px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.blog-step-card:hover{
+  border-color:var(--border-default);
+  box-shadow:0 8px 30px var(--shadow-card);
+}
+.blog-step-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.step-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--btn-primary-gradient);color:#071124;
+  font-weight:800;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+  padding:5px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(232,96,76,0.3);
+}
+.blog-step-card h3{margin:0;font-size:1.35rem;color:var(--text-primary);letter-spacing:-0.01em}
+.blog-step-body p{margin:0 0 14px;line-height:1.7}
+.blog-step-body p:last-child{margin-bottom:0}
+
+.step-approach{
+  margin-top:16px;padding:16px 20px;
+  background:rgba(232,96,76,0.06);border-left:3px solid var(--accent-1);
+  border-radius:0 12px 12px 0;
+}
+.step-approach-label{
+  display:block;font-size:11px;font-weight:800;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--accent-1);margin-bottom:6px;
+}
+.step-approach p{margin:0;font-size:0.96rem;color:var(--text-primary);line-height:1.6}
+
+.step-chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 18px}
+.step-chip{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
+  border-radius:999px;font-size:13px;font-weight:600;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border-default);
+  color:var(--text-primary);
+}
+.step-chip.highlight{
+  background:rgba(232,96,76,0.15);border-color:var(--accent-1);color:var(--text-bright);
+}
+
+.blog-cta-banner{
+  margin:40px 0;padding:36px;border-radius:24px;
+  background:linear-gradient(135deg, rgba(232,96,76,0.12), rgba(245,166,35,0.08));
+  border:1px solid var(--border-default);text-align:center;
+  position:relative;overflow:hidden;
+}
+.blog-cta-banner h3{margin:0 0 10px;font-size:clamp(1.4rem, 2.8vw, 1.85rem);color:var(--text-primary)}
+.blog-cta-banner p{margin:0 auto 22px;max-width:580px;color:var(--text-body);font-size:1.02rem;line-height:1.65}
+.blog-prose a.btn,
+.blog-cta-banner .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 28px;font-size:15px;font-weight:700;
+  color:#071124 !important;text-decoration:none;
+}
+.blog-prose a.btn.ghost,
+.blog-cta-banner .btn.ghost{
+  color:var(--text-primary) !important;
+  background:transparent;border:1px solid var(--border-default);
+}
+.blog-prose a.btn.ghost:hover,
+.blog-cta-banner .btn.ghost:hover{
+  border-color:rgba(232,96,76,0.6);
+  color:var(--text-bright) !important;
+}
+
+.blog-faq-section{margin:40px 0 20px}
+.blog-faq-section h2{font-size:1.8rem;margin-bottom:20px}
+.blog-faq-item{
+  background:var(--surface-card);border:1px solid var(--border-subtle);
+  border-radius:14px;margin-bottom:12px;overflow:hidden;
+  transition:border-color .25s ease;
+}
+.blog-faq-item[open]{border-color:var(--border-default)}
+.blog-faq-question{
+  padding:18px 22px;cursor:pointer;font-weight:700;font-size:1.05rem;
+  color:var(--text-primary);list-style:none;display:flex;
+  align-items:center;justify-content:space-between;
+}
+.blog-faq-question::-webkit-details-marker{display:none}
+.blog-faq-question::after{
+  content:'+';font-size:1.4rem;line-height:1;color:var(--accent-1);
+  transition:transform .2s ease;
+}
+.blog-faq-item[open] .blog-faq-question::after{
+  content:'−';transform:rotate(180deg);
+}
+.blog-faq-answer{
+  padding:0 22px 18px;color:var(--text-body);line-height:1.65;font-size:0.98rem;
+}
+
+.blog-author-card{
+  display:flex;align-items:center;gap:16px;padding:20px 24px;
+  margin:36px 0 20px;border-radius:16px;background:var(--surface-card);
+  border:1px solid var(--border-subtle);
+}
+.blog-author-avatar{
+  width:48px;height:48px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--accent-1);background:var(--btn-primary-gradient);
+  display:flex;align-items:center;justify-content:center;color:#071124;font-weight:800;font-size:18px;
+}
+.blog-author-info h4{margin:0 0 4px;font-size:1.05rem;color:var(--text-primary)}
+.blog-author-info p{margin:0;font-size:0.88rem;color:var(--text-faint)}
+
+[data-theme="light"] .blog-step-card{background:rgba(255,255,255,0.85);border-color:rgba(0,0,0,0.08)}
+[data-theme="light"] .step-approach{background:rgba(232,96,76,0.08)}
+[data-theme="light"] .step-chip{background:rgba(0,0,0,0.04);border-color:rgba(0,0,0,0.08)}
+[data-theme="light"] .blog-cta-banner{background:linear-gradient(135deg, rgba(232,96,76,0.08), rgba(245,166,35,0.08));border-color:rgba(232,96,76,0.25)}
+[data-theme="light"] .blog-faq-item{background:rgba(255,255,255,0.85);border-color:rgba(0,0,0,0.08)}
+[data-theme="light"] .blog-author-card{background:rgba(255,255,255,0.85);border-color:rgba(0,0,0,0.08)}
+

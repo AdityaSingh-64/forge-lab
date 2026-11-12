@@ -1,5 +1,16 @@
 {
-  "generatedAt": "2026-09-24T15:27:36.206Z",
+  "generatedAt": "2026-11-12T00:00:00.000Z",
   "source": "http://forgelab.local",
-  "posts": []
+  "posts": [
+    {
+      "slug": "how-does-ui-ux-design-improve-website-conversions",
+      "title": "How Does UI/UX Design Improve Website Conversions?",
+      "date": "2026-11-12T00:00:00.000Z",
+      "dateLabel": "12 November 2026",
+      "category": "article",
+      "excerpt": "Learn how UI/UX design improves website conversions through better navigation, responsive layouts, clear CTAs, and user-friendly experiences.",
+      "image": "assets/blog/ui-ux-design-conversions.svg",
+      "url": "blog/how-does-ui-ux-design-improve-website-conversions/"
+    }
+  ]
 }
