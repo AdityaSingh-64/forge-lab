@@ -895,3 +895,175 @@ function toggleTheme(){
     document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
   });
 })();
+
+
+// ========================================
+// TESTIMONIAL ROTATOR (Apple-style smooth crossfade)
+// ========================================
+(function(){
+  const stage = document.querySelector('.testimonial-stage');
+  const quoteEl = document.getElementById('testimonial-quote');
+  const citeEl = document.getElementById('testimonial-cite');
+  const quoteMark = document.querySelector('.testimonial .quote-mark');
+  if(!stage || !quoteEl || !citeEl) return;
+
+  const testimonials = [
+    {
+      quote: "ForgeLab rebuilt our checkout flow and our mobile conversion rate jumped by 34% within the first month.",
+      cite: "— Co-founder, Direct-to-Consumer Brand"
+    },
+    {
+      quote: "Working with the founders directly made all the difference. Zero agency bureaucracy, just crisp execution and thoughtful design.",
+      cite: "— Product Lead, SaaS Platform"
+    },
+    {
+      quote: "Our organic inbound leads tripled six months after their technical SEO overhaul and site rebuild.",
+      cite: "— Director of Growth, B2B Services"
+    },
+    {
+      quote: "From our logo to the full website design system, they gave our brand the polish and authority we needed to close enterprise deals.",
+      cite: "— Managing Director, Consulting Group"
+    },
+    {
+      quote: "The UI they crafted was intuitive right out of the gate. Our customers frequently compliment how clean and fast the platform feels.",
+      cite: "— Operations Head, Tech Startup"
+    },
+    {
+      quote: "They don’t just run campaigns; they understand unit economics and customer acquisition. One of the best investments we made this year.",
+      cite: "— Founder, Lifestyle & Apparel Label"
+    }
+  ];
+
+  const ROTATION_INTERVAL = 4000;
+  const SWAP_DURATION = 340;
+  let timer = null;
+  let currentIndex = 0;
+  let isHovered = false;
+  let isSectionInView = false;
+  let isAnimating = false;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const dotsContainer = stage.querySelector('.testimonial-dots');
+  const dots = [];
+  if(dotsContainer){
+    testimonials.forEach((item, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'testimonial-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+      dot.setAttribute('aria-label', `Testimonial ${i + 1} of ${testimonials.length}`);
+      dot.addEventListener('click', () => {
+        if(i === currentIndex || isAnimating) return;
+        setTestimonial(i);
+        startTimer();
+      });
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    });
+  }
+
+  function updateDots(newIndex){
+    dots.forEach((dot, idx) => {
+      const isActive = idx === newIndex;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  function getNextRandomIndex(){
+    if(testimonials.length <= 1) return 0;
+    let next;
+    do {
+      next = Math.floor(Math.random() * testimonials.length);
+    } while(next === currentIndex);
+    return next;
+  }
+
+  function setTestimonial(index){
+    if(isAnimating || index === currentIndex) return;
+    isAnimating = true;
+
+    const nextData = testimonials[index];
+    updateDots(index);
+
+    if(prefersReduced.matches){
+      stage.classList.add('is-fading');
+      setTimeout(() => {
+        quoteEl.textContent = nextData.quote;
+        citeEl.textContent = nextData.cite;
+        currentIndex = index;
+        stage.classList.remove('is-fading');
+        isAnimating = false;
+      }, 200);
+      return;
+    }
+
+    stage.classList.add('is-exiting');
+    if(quoteMark) quoteMark.classList.add('pulse');
+
+    setTimeout(() => {
+      quoteEl.textContent = nextData.quote;
+      citeEl.textContent = nextData.cite;
+      currentIndex = index;
+
+      stage.classList.remove('is-exiting');
+      stage.classList.add('is-entering');
+      void stage.offsetHeight;
+
+      requestAnimationFrame(() => {
+        stage.classList.remove('is-entering');
+        if(quoteMark) quoteMark.classList.remove('pulse');
+        setTimeout(() => {
+          isAnimating = false;
+        }, 420);
+      });
+    }, SWAP_DURATION);
+  }
+
+  function tick(){
+    if(isHovered || !isSectionInView || document.hidden || isAnimating) return;
+    const nextIdx = getNextRandomIndex();
+    setTestimonial(nextIdx);
+  }
+
+  function startTimer(){
+    stopTimer();
+    timer = setInterval(tick, ROTATION_INTERVAL);
+  }
+
+  function stopTimer(){
+    if(timer){ clearInterval(timer); timer = null; }
+  }
+
+  stage.addEventListener('mouseenter', () => { isHovered = true; });
+  stage.addEventListener('mouseleave', () => { isHovered = false; });
+  stage.addEventListener('focusin', () => { isHovered = true; });
+  stage.addEventListener('focusout', () => { isHovered = false; });
+
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      stopTimer();
+    } else if(isSectionInView){
+      startTimer();
+    }
+  });
+
+  const section = document.getElementById('testimonial');
+  if(section && 'IntersectionObserver' in window){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isSectionInView = entry.isIntersecting;
+        if(isSectionInView){
+          startTimer();
+        } else {
+          stopTimer();
+        }
+      });
+    }, {threshold: 0.1});
+    observer.observe(section);
+  } else {
+    isSectionInView = true;
+    startTimer();
+  }
+})();

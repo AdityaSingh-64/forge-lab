@@ -466,10 +466,26 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
    - The oversized quote mark uses a serif (Georgia) as a decorative flourish.
    - The quote itself is set in the standard Inter sans at a large size in italics.
    This is a deliberate editorial accent for the client quote, not an unstyled fallback. */
-.testimonial{text-align:center;padding:100px 0}
-.testimonial .quote-mark{display:block;font-family:Georgia,'Times New Roman',serif;font-size:72px;line-height:1;color:var(--accent-1);margin-bottom:8px}
+.testimonial{text-align:center;padding:100px 0;position:relative}
+.testimonial-stage{position:relative;margin:0 auto;max-width:860px;display:flex;flex-direction:column;align-items:center}
+.testimonial .quote-mark{display:block;font-family:Georgia,'Times New Roman',serif;font-size:72px;line-height:1;color:var(--accent-1);margin-bottom:8px;transition:transform .38s var(--ease-spring), opacity .38s ease;user-select:none;will-change:transform,opacity}
+.testimonial .quote-mark.pulse{transform:scale(0.85);opacity:0.55}
+.testimonial-content{margin:0 auto;max-width:760px;min-height:140px;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity .42s var(--ease-out-expo), transform .42s var(--ease-out-expo), filter .42s var(--ease-out-expo);will-change:opacity,transform,filter}
+.testimonial-stage.is-exiting .testimonial-content{opacity:0;transform:translateY(-14px) scale(0.98);filter:blur(5px)}
+.testimonial-stage.is-entering .testimonial-content{opacity:0;transform:translateY(16px) scale(0.98);filter:blur(5px);transition:none !important}
+.testimonial-stage.is-fading .testimonial-content{opacity:0;transition:opacity .2s ease}
 .testimonial blockquote{margin:0 auto 20px;max-width:720px;font-size:28px;font-style:italic;font-weight:600;color:var(--text-primary);line-height:1.4}
 .testimonial cite{display:block;font-style:normal;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+.testimonial-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:24px}
+.testimonial-dot{width:7px;height:7px;padding:0;border:none;border-radius:50%;background:var(--border-strong);cursor:pointer;transition:all .32s var(--ease-spring);outline-offset:3px}
+.testimonial-dot:hover{background:var(--text-faint)}
+.testimonial-dot.active{width:24px;border-radius:10px;background:var(--accent-1);box-shadow:0 0 12px rgba(232,96,76,0.35)}
+@media (prefers-reduced-motion: reduce){
+  .testimonial-content{filter:none !important;transform:none !important;transition:opacity .3s ease !important}
+  .testimonial-stage.is-exiting .testimonial-content,
+  .testimonial-stage.is-entering .testimonial-content{filter:none !important;transform:none !important;opacity:0}
+  .testimonial .quote-mark{transform:none !important;transition:none !important}
+}
 
 
 /* ========================================
@@ -577,6 +593,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .hero h1{font-size:38px}
   .hero-logo{margin-bottom:24px}
   .testimonial blockquote{font-size:22px}
+  .testimonial-content{min-height:130px}
 }
 
 /* ========================================
@@ -594,6 +611,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .container{padding:48px 20px}
   .hero h1{font-size:36px}
   .tagline{font-size:17px}
+  .testimonial-content{min-height:145px}
 }
 
 /* ========================================
@@ -636,6 +654,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .hero h1{font-size:26px}
   .tagline{font-size:14px}
   .testimonial blockquote{font-size:19px}
+  .testimonial-content{min-height:170px}
   .btn, .btn.ghost{padding:11px 18px;font-size:14px}
 }
 
@@ -650,6 +669,7 @@ section[id]{scroll-margin-top:calc(100px + env(safe-area-inset-top, 0px))}
   .hero-actions .btn{width:100%}
   .section h2{font-size:1.75rem}
   .testimonial blockquote{font-size:18px}
+  .testimonial-content{min-height:180px}
 }
 
 /* ========================================
