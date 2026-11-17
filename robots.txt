@@ -1,7 +1,28 @@
 User-agent: *
 Allow: /
 
-# Block nothing — all pages are public and indexable.
-# No critical resources (CSS, JS, images) are disallowed.
+# Explicit AI and search engine bot permissions
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://theforgelab.in/sitemap.xml
+# LLM & AI agent documentation standard (llmstxt.org)
+# Link: https://theforgelab.in/llms.txt

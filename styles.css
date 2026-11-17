@@ -82,7 +82,7 @@
   --text-body: rgba(26,32,44,0.72);
   --text-dim: rgba(26,32,44,0.68);
   --text-faint: rgba(26,32,44,0.55);
-  --text-ghost: rgba(26,32,44,0.32);
+  --text-ghost: rgba(26,32,44,0.52);
 
   --surface-card: rgba(0,0,0,0.018);
   --surface-card-focus: rgba(0,0,0,0.03);
@@ -219,7 +219,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 }
 .nav .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:18px;align-items:center}
 .nav .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;transition:color .25s ease}
-.btn-cta{margin-left:auto;background:var(--btn-primary-gradient);border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
+.btn-cta{margin-left:auto;background:var(--btn-primary-gradient);border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
 .hamburger{display:none;background:transparent;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;z-index:102;position:relative}
 .hamburger:active{transform:scale(0.95)}
 

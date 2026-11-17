@@ -164,9 +164,9 @@ function chromeNav(root) {
   return `  <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav scrolled">
     <a class="logo" href="${home}">
-      <img src="${root}assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
+      <img src="${root}assets/forge-logo.png" alt="ForgeLab" class="nav-logo" width="1063" height="768" />
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-nav-links">
       <li><a href="${home}#about" onclick="closeNav()">About</a></li>
       <li><a href="${home}#services" onclick="closeNav()">Services</a></li>
       <li><a href="${home}#projects" onclick="closeNav()">Projects</a></li>
@@ -180,7 +180,7 @@ function chromeNav(root) {
         <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav-links" onclick="toggleNav()">☰</button>
   </nav>`;
 }
 
@@ -190,7 +190,7 @@ function chromeFooter(root) {
   return `  <footer class="footer">
     <div class="footer-inner">
       <a class="footer-brand" href="${home}">
-        <img src="${root}assets/forge-logo.png" alt="ForgeLab" class="footer-logo" />
+        <img src="${root}assets/forge-logo.png" alt="ForgeLab" class="footer-logo" width="1063" height="768" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="${home}#about">About</a></li>
@@ -228,14 +228,14 @@ function pageShell({ title, description, root, extraCss, extraJs, bodyClass, con
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="${root}styles.css?v=35" />${css}
+  <link rel="stylesheet" href="${root}styles.css?v=37" />${css}
 </head>
 <body class="${bodyClass || ''}">
 ${logoFilterSvg()}
 ${chromeNav(root)}
 ${content}
 ${chromeFooter(root)}
-  <script src="${root}script.js?v=29"></script>${js}
+  <script src="${root}script.js?v=30"></script>${js}
 </body>
 </html>
 `;
@@ -422,9 +422,27 @@ async function main() {
   };
   fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2) + '\n');
   fs.writeFileSync(path.join(BLOG_DIR, 'index.html'), renderListingPage());
+  updateSitemap(posts);
 
   console.log('\nSynced ' + posts.length + ' post' + (posts.length === 1 ? '' : 's') + '.');
   console.log('Preview: npm start  →  http://localhost:5500/blog/\n');
+}
+
+function updateSitemap(posts) {
+  const sitemapPath = path.join(ROOT, 'sitemap.xml');
+  if (!fs.existsSync(sitemapPath)) return;
+  let content = fs.readFileSync(sitemapPath, 'utf8');
+  const today = new Date().toISOString().slice(0, 10);
+
+  posts.forEach((post) => {
+    const loc = `https://theforgelab.in/blog/${post.slug}/`;
+    if (!content.includes(loc)) {
+      const entry = `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n</urlset>`;
+      content = content.replace('</urlset>', entry);
+    }
+  });
+
+  fs.writeFileSync(sitemapPath, content);
 }
 
 main().catch((err) => fail('Sync failed', err && err.stack ? err.stack : String(err)));

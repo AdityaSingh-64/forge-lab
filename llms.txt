@@ -1,0 +1,37 @@
+# ForgeLab
+
+> ForgeLab (https://theforgelab.in) is an independent web development and digital solutions studio based in India, serving growing businesses and high-growth brands globally. Founded and operated directly by two partner engineers and designers, ForgeLab delivers high-performance custom websites, e-commerce stores, bespoke web applications, UI/UX systems, technical SEO, AEO/GEO, and growth marketing.
+
+## Core Capabilities & Services
+
+- [Web Development](https://theforgelab.in/services/web-development.html): Custom responsive business websites, Next.js / React applications, modern WordPress architecture, performance optimization, and custom integrations.
+- [E-Commerce Development](https://theforgelab.in/services/ecommerce-development.html): High-converting Shopify and WooCommerce stores, custom cart and checkout flows, headless commerce, inventory synchronization, and conversion rate optimization (CRO).
+- [UI/UX Design](https://theforgelab.in/services/ui-ux-design.html): Research-led UX design, interactive prototypes, design systems, usability auditing, and conversion-focused interface architecture.
+- [Search Engine Optimization (SEO) & AEO / GEO](https://theforgelab.in/services/seo-services.html): Technical SEO, Core Web Vitals optimization, semantic structured data (Schema.org), content strategy, and Answer Engine / Generative Engine Optimization for ChatGPT, Perplexity, and Google AI Overviews.
+- [Digital Marketing & Performance](https://theforgelab.in/services/digital-marketing.html): Data-led paid media, organic search growth, social media strategy, conversion funnels, and marketing analytics.
+- [Maintenance & Support](https://theforgelab.in/services/maintenance-support-services.html): Proactive site monitoring, uptime alerts, security patching, Core Web Vitals maintenance, and continuous feature updates.
+- [Branding & Graphic Design](https://theforgelab.in/services/branding-graphic-design.html): Visual identity systems, logo design, typography and color palettes, brand guidelines, and digital asset production.
+
+## Technology Stack & Expertise
+
+- **Frontend**: HTML5, CSS3, Modern ES6+ JavaScript, React, Next.js, Tailwind CSS, Web Components, Responsive Web Design.
+- **Backend & CMS**: Node.js, Express, REST APIs, WordPress Headless & Custom Themes, Shopify Liquid & Storefront API, WooCommerce.
+- **Performance & Analytics**: Lighthouse 95+ score targets, Core Web Vitals (LCP, CLS, INP) tuning, Google Analytics 4, Google Tag Manager.
+- **Search & AI Readiness**: JSON-LD Structured Data, Open Graph, Twitter Cards, Semantic HTML5, llms.txt standard, and Answer Engine Optimization (AEO).
+
+## Business Model & Engagement
+
+- **Direct Founder Collaboration**: Clients work directly with the two founding partners without account managers, layers of bureaucracy, or agency overhead.
+- **Global Delivery with Indian Engineering Excellence**: Headquartered in India, delivering projects across North America, Europe, Asia-Pacific, and India.
+- **Transparent Pricing**: Milestone-based project pricing, transparent scopes, and flexible maintenance retainers.
+
+## Knowledge & Insights
+
+- [Blog & Publications](https://theforgelab.in/blog/index.html): Studio engineering notes, case studies, design essays, and industry guides.
+- [How UI/UX Design Improves Website Conversions](https://theforgelab.in/blog/how-does-ui-ux-design-improve-website-conversions/): Deep dive on checkout psychology, cognitive load reduction, Core Web Vitals, and conversion rate lifts.
+
+## Contact & Inquiries
+
+- **Website**: https://theforgelab.in
+- **Email**: team@theforgelab.in
+- **Inquiry Form**: https://theforgelab.in/#contact

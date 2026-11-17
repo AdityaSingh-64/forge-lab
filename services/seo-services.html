@@ -30,6 +30,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SEO Services | Search Engine Optimization Agency | ForgeLab" />
   <meta name="twitter:description" content="Technical SEO, on-page optimization, content strategy and link building from ForgeLab." />
+  <meta name="twitter:image" content="https://theforgelab.in/assets/forge-logo.png" />
   <script>
     (function(){
       var theme = localStorage.getItem('theme');
@@ -103,6 +104,14 @@
               "@type": "Answer",
               "text": "We track organic traffic, keyword rankings, impressions and clicks in Google Search Console, conversions such as leads and sales, and revenue attributed to organic search. Reporting is tied to your business goals rather than vanity metrics."
             }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you provide AEO and Generative Engine Optimization (GEO)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We prepare websites for AI search engines like ChatGPT, Perplexity, Claude, and Google AI Overviews through semantic content capsules, structured JSON-LD data, llms.txt implementation, and entity-first optimization."
+            }
           }
         ]
       },
@@ -117,7 +126,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="../styles.css?v=36" />
+  <link rel="stylesheet" href="../styles.css?v=37" />
   <link rel="stylesheet" href="../services.css?v=4" />
 </head>
 <body class="page-service">
@@ -146,9 +155,9 @@
   <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav scrolled" aria-label="Primary navigation">
     <a class="logo" href="../index.html" aria-label="ForgeLab home">
-      <img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
+      <img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" width="1063" height="768" />
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-nav-links">
       <li><a href="../index.html#about" onclick="closeNav()">About</a></li>
       <li><a href="../index.html#services" onclick="closeNav()" class="active" aria-current="page">Services</a></li>
       <li><a href="../index.html#projects" onclick="closeNav()">Projects</a></li>
@@ -162,7 +171,7 @@
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       </button>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav-links" onclick="toggleNav()">☰</button>
   </nav>
 
   <main class="service-main">
@@ -229,6 +238,10 @@
           <article class="svc-card">
             <h3>Reporting &amp; Analytics</h3>
             <p>Google Search Console and analytics tracking set up properly, with clear reporting on rankings, organic traffic, conversions, and revenue. You see what changed, why it changed, and what we are doing next.</p>
+          </article>
+          <article class="svc-card">
+            <h3>AEO &amp; Generative Engine Optimization (GEO)</h3>
+            <p>Future-proof your organic visibility for AI answer engines. We structure your site to be cited and recommended in ChatGPT Search, Perplexity, Claude, and Google AI Overviews with llms.txt, schema markup, and question-answering capsules.</p>
           </article>
         </div>
       </div>
@@ -312,6 +325,10 @@
             <summary>How do you measure SEO success?</summary>
             <p>We track organic traffic, keyword rankings, impressions and clicks in Google Search Console, conversions such as leads and sales, and revenue attributed to organic search. Reporting is tied to your business goals rather than vanity metrics.</p>
           </details>
+          <details class="svc-faq">
+            <summary>Do you provide AEO and Generative Engine Optimization (GEO)?</summary>
+            <p>Yes. We prepare websites for AI search engines like ChatGPT, Perplexity, Claude, and Google AI Overviews through semantic content capsules, structured JSON-LD data, llms.txt implementation, and entity-first optimization.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -363,7 +380,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <a class="footer-brand" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" /></a>
+      <a class="footer-brand" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" width="1063" height="768" loading="lazy" /></a>
       <ul class="footer-links">
         <li><a href="../index.html#about">About</a></li><li><a href="../index.html#services">Services</a></li><li><a href="../index.html#projects">Projects</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../index.html#contact">Contact</a></li>
       </ul>
@@ -373,6 +390,6 @@
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
   </button>
-  <script src="../script.js?v=29"></script>
+  <script src="../script.js?v=30"></script>
 </body>
 </html>
