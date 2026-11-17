@@ -934,7 +934,7 @@ function toggleTheme(){
     }
   ];
 
-  const ROTATION_INTERVAL = 4000;
+  const ROTATION_INTERVAL = 6500;
   const SWAP_DURATION = 340;
   let timer = null;
   let currentIndex = 0;
@@ -971,13 +971,9 @@ function toggleTheme(){
     });
   }
 
-  function getNextRandomIndex(){
+  function getNextIndex(){
     if(testimonials.length <= 1) return 0;
-    let next;
-    do {
-      next = Math.floor(Math.random() * testimonials.length);
-    } while(next === currentIndex);
-    return next;
+    return (currentIndex + 1) % testimonials.length;
   }
 
   function setTestimonial(index){
@@ -1023,7 +1019,7 @@ function toggleTheme(){
 
   function tick(){
     if(isHovered || !isSectionInView || document.hidden || isAnimating) return;
-    const nextIdx = getNextRandomIndex();
+    const nextIdx = getNextIndex();
     setTestimonial(nextIdx);
   }
 
@@ -1066,4 +1062,69 @@ function toggleTheme(){
     isSectionInView = true;
     startTimer();
   }
+})();
+
+
+// ========================================
+// FORM SUBMISSION (In-page AJAX feedback)
+// ========================================
+(function(){
+  function setupAjaxForm(formId, statusId, successMsg) {
+    var form = document.getElementById(formId);
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      if (!window.fetch || !window.FormData) return; // Fall back to native POST
+      e.preventDefault();
+      var status = document.getElementById(statusId);
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalBtnText = submitBtn ? submitBtn.textContent : '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
+      if (status) {
+        status.textContent = '';
+        status.className = 'form-status';
+      }
+
+      var formData = new FormData(form);
+      fetch('https://formsubmit.co/ajax/team@theforgelab.in', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: formData
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Status ' + res.status);
+        return res.json();
+      })
+      .then(function() {
+        if (status) {
+          status.textContent = successMsg;
+          status.className = 'form-status success';
+        }
+        form.reset();
+      })
+      .catch(function() {
+        if (status) {
+          status.textContent = 'Message could not be sent directly. Submitting fallback...';
+          status.className = 'form-status error';
+        }
+        setTimeout(function() {
+          form.submit();
+        }, 800);
+      })
+      .finally(function() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      });
+    });
+  }
+
+  setupAjaxForm('contactForm', 'formStatus', 'Thank you! We have received your message and will reply within 24 hours.');
+  setupAjaxForm('newsletterForm', 'newsletterStatus', 'Thank you! You are now subscribed to ForgeLab insights.');
 })();

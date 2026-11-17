@@ -11,7 +11,7 @@
     const label = post.category === 'newsletter' ? 'Newsletter' : 'Article';
     const href = prefix + (post.url || ('blog/' + post.slug + '/'));
     const img = post.image
-      ? `<img class="blog-card-thumb" src="${prefix}${post.image}" alt="" decoding="async" />`
+      ? `<img class="blog-card-thumb" src="${prefix}${post.image}" alt="${escapeHtml(post.title)}" decoding="async" />`
       : `<div class="blog-card-thumb-fallback" aria-hidden="true"></div>`;
     const excerpt = post.excerpt ? `<p>${escapeHtml(post.excerpt)}</p>` : '';
     return `<a class="blog-card stagger-child" href="${href}" data-category="${escapeHtml(post.category || 'article')}">

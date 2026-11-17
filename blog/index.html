@@ -29,6 +29,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Blog — Web Development, Design &amp; Marketing Insights | ForgeLab" />
   <meta name="twitter:description" content="Practical articles on web development, UI/UX design, e-commerce, SEO and digital marketing from the ForgeLab studio." />
+  <meta name="twitter:image" content="https://theforgelab.in/assets/forge-logo.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -61,7 +62,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=36" />
+  <link rel="stylesheet" href="../styles.css?v=37" />
   <link rel="stylesheet" href="../blog.css?v=4" />
 </head>
 <body class="page-blog">
@@ -90,9 +91,9 @@
   <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav scrolled">
     <a class="logo" href="../index.html">
-      <img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
+      <img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" width="1063" height="768" />
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-nav-links">
       <li><a href="../index.html#about" onclick="closeNav()">About</a></li>
       <li><a href="../index.html#services" onclick="closeNav()">Services</a></li>
       <li><a href="../index.html#projects" onclick="closeNav()">Projects</a></li>
@@ -106,7 +107,7 @@
         <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav-links" onclick="toggleNav()">☰</button>
   </nav>
   <main class="blog-main">
     <section class="section blog-listing">
@@ -130,9 +131,11 @@
           <input type="hidden" name="_subject" value="ForgeLab newsletter signup">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="box">
+          <input type="hidden" name="_next" value="https://theforgelab.in/blog/index.html#newsletterForm">
           <input type="text" name="_honey" style="display:none">
-          <input type="email" name="email" placeholder="you@company.com" required />
-          <button class="btn" type="submit">Subscribe</button>
+          <input type="email" name="email" placeholder="you@company.com" aria-label="Email address" required />
+          <button class="btn" type="submit" id="newsletterSubmitBtn">Subscribe</button>
+          <div class="form-status" id="newsletterStatus" aria-live="polite"></div>
         </form>
       </div>
     </section>
@@ -140,7 +143,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <a class="footer-brand" href="../index.html">
-        <img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" />
+        <img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" width="1063" height="768" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="../index.html#about">About</a></li>
@@ -155,7 +158,7 @@
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
   </button>
-  <script src="../script.js?v=29"></script>
+  <script src="../script.js?v=30"></script>
   <script src="../blog.js?v=1"></script>
 </body>
 </html>

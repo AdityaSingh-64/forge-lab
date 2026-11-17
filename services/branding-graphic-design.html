@@ -29,6 +29,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Branding &amp; Graphic Design Services | ForgeLab" />
   <meta name="twitter:description" content="Distinctive brand identities, logos, campaigns, packaging, and graphic design systems from ForgeLab." />
+  <meta name="twitter:image" content="https://theforgelab.in/assets/forge-logo.png" />
   <script>
     (function(){var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);})();
   </script>
@@ -159,7 +160,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="../styles.css?v=36" />
+  <link rel="stylesheet" href="../styles.css?v=37" />
   <link rel="stylesheet" href="../services.css?v=4" />
 </head>
 <body class="page-service brand-page">
@@ -178,8 +179,8 @@
   </svg>
   <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav scrolled" aria-label="Primary navigation">
-    <a class="logo" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" /></a>
-    <ul class="nav-links">
+    <a class="logo" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="nav-logo" width="1063" height="768" /></a>
+    <ul class="nav-links" id="primary-nav-links">
       <li><a href="../index.html#about" onclick="closeNav()">About</a></li>
       <li><a href="../index.html#services" onclick="closeNav()" class="active" aria-current="page">Services</a></li>
       <li><a href="../index.html#projects" onclick="closeNav()">Projects</a></li>
@@ -193,7 +194,7 @@
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       </button>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav-links" onclick="toggleNav()">☰</button>
   </nav>
 
   <main class="service-main">
@@ -458,7 +459,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <a class="footer-brand" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" /></a>
+      <a class="footer-brand" href="../index.html" aria-label="ForgeLab home"><img src="../assets/forge-logo.png" alt="ForgeLab" class="footer-logo" width="1063" height="768" loading="lazy" /></a>
       <ul class="footer-links">
         <li><a href="../index.html#about">About</a></li><li><a href="../index.html#services">Services</a></li><li><a href="../index.html#projects">Projects</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../index.html#contact">Contact</a></li>
       </ul>
@@ -468,6 +469,6 @@
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
   </button>
-  <script src="../script.js?v=29"></script>
+  <script src="../script.js?v=30"></script>
 </body>
 </html>

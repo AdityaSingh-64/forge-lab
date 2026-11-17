@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-28JT9W66TN"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -10,7 +11,6 @@
   gtag('config', 'G-28JT9W66TN');
 </script>
   <meta name="google-site-verification" content="yMsuoZUy44kMBKgDoGMeTju6sjxjYWFSt5EHyRLVAOw" />
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <link rel="icon" href="assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
@@ -31,6 +31,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Web Development &amp; Digital Marketing Agency | ForgeLab" />
   <meta name="twitter:description" content="Web development, e-commerce, SEO and digital marketing for growing businesses." />
+  <meta name="twitter:image" content="https://theforgelab.in/assets/forge-logo.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -42,10 +43,33 @@
         "url": "https://theforgelab.in/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://theforgelab.in/assets/forge-logo.png"
+          "url": "https://theforgelab.in/assets/forge-logo.png",
+          "width": 1063,
+          "height": 768
         },
         "email": "team@theforgelab.in",
-        "description": "ForgeLab is a web development and digital marketing studio building websites, e-commerce stores, custom web apps, and growth-focused marketing for growing businesses."
+        "description": "ForgeLab is an engineering and design studio building fast websites, e-commerce stores, custom web apps, and growth-focused marketing for growing businesses.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "IN"
+        },
+        "areaServed": [
+          "India",
+          "United States",
+          "United Kingdom",
+          "Global"
+        ],
+        "knowsAbout": [
+          "Web Development",
+          "UI/UX Design",
+          "E-Commerce Development",
+          "Technical SEO",
+          "Answer Engine Optimization (AEO)",
+          "Generative Engine Optimization (GEO)",
+          "Digital Marketing",
+          "Performance Optimization",
+          "Core Web Vitals"
+        ]
       },
       {
         "@type": "WebSite",
@@ -66,7 +90,7 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=36" />
+  <link rel="stylesheet" href="styles.css?v=37" />
   <link rel="stylesheet" href="blog.css?v=4" />
 </head>
 <body>
@@ -100,16 +124,16 @@
   <div class="scroll-progress" aria-hidden="true"></div>
   <nav class="nav">
     <a class="logo" href="#home">
-      <img src="assets/forge-logo.png" alt="ForgeLab" class="nav-logo" />
+      <img src="assets/forge-logo.png" alt="ForgeLab" class="nav-logo" width="1063" height="768" />
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-nav-links">
       <li><a href="#about" onclick="closeNav()">About</a></li>
       <li><a href="#services" onclick="closeNav()">Services</a></li>
       <li><a href="#projects" onclick="closeNav()">Projects</a></li>
       <li><a href="blog/index.html" onclick="closeNav()">Blog</a></li>
       <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
-    <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+    <a class="btn-cta" href="#contact">Get in touch</a>
     <div class="theme-toggle-wrapper">
       <button class="theme-toggle" type="button" aria-label="Toggle dark/light mode" onclick="toggleTheme()">
         <!-- Moon icon (shown in dark mode — click to switch to light) -->
@@ -122,7 +146,7 @@
         <span>Light mode</span>
       </div>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav-links" onclick="toggleNav()">☰</button>
   </nav>
 
   <header class="hero" id="home">
@@ -132,7 +156,7 @@
     </div>
     <div class="hero-inner">
       <div class="hero-content" data-reveal="scale">
-        <img src="assets/logo-nobg-hq_upscayl_5x_digital-art-4x.png" alt="ForgeLab" class="hero-logo" />
+        <img src="assets/logo-nobg-hq_upscayl_5x_digital-art-4x.png" alt="ForgeLab" class="hero-logo" width="3230" height="1105" />
         <h1>Websites and marketing that grow your business.</h1>
         <p class="tagline">ForgeLab is a two‑founder studio that runs like an agency — building websites, web apps, digital marketing, and design for growing businesses.</p>
         <div class="hero-actions">
@@ -316,7 +340,7 @@
           <div class="carousel-viewport">
             <div class="carousel-track projects-track">
               <article class="project-card">
-                <img class="project-thumb" src="assets/projects/mobile-checkout-ui.png" alt="E-Commerce Checkout System project preview" decoding="async" />
+                <img class="project-thumb" src="assets/projects/mobile-checkout-ui.png" alt="E-Commerce Checkout System project preview" width="457" height="800" loading="lazy" decoding="async" />
                 <div class="project-content">
                   <h3>E-Commerce Checkout System</h3>
                   <p>Developed a responsive, user-friendly checkout flow featuring multi-step navigation, shipping and payment options, coupon discounts, dynamic order summaries, tax calculations, and secure payment UI.</p>
@@ -331,7 +355,7 @@
                 </div>
               </article>
               <article class="project-card">
-                <img class="project-thumb" src="assets/projects/admin-portal-ui.png" alt="Admin Portal project preview" decoding="async" />
+                <img class="project-thumb" src="assets/projects/admin-portal-ui.png" alt="Admin Portal project preview" width="800" height="457" loading="lazy" decoding="async" />
                 <div class="project-content">
                   <h3>Admin Portal</h3>
                   <p>Developed a responsive HR management dashboard that provides administrators with a centralized interface for employee management, attendance monitoring, leave requests, payroll tracking, department analytics, reports, and organizational announcements.</p>
@@ -347,7 +371,7 @@
                 </div>
               </article>
               <article class="project-card">
-                <img class="project-thumb" src="assets/projects/task-dashboard-ui.png" alt="FocusFlow project preview" decoding="async" />
+                <img class="project-thumb" src="assets/projects/task-dashboard-ui.png" alt="FocusFlow project preview" width="800" height="457" loading="lazy" decoding="async" />
                 <div class="project-content">
                   <h3>FocusFlow</h3>
                   <p>Designed and developed a responsive productivity dashboard for managing work and personal tasks, featuring task organization, priorities, categories, deadlines, search/filter functionality, and real-time progress analytics.</p>
@@ -363,7 +387,7 @@
                 </div>
               </article>
               <article class="project-card">
-                <img class="project-thumb" src="assets/projects/storefront-merchant-analytics.png" alt="Shopify E-Commerce Store project preview" decoding="async" />
+                <img class="project-thumb" src="assets/projects/storefront-merchant-analytics.png" alt="Shopify E-Commerce Store project preview" width="800" height="457" loading="lazy" decoding="async" />
                 <div class="project-content">
                   <h3>Shopify E-Commerce Store</h3>
                   <p>Designed and customized a modern, adaptive Shopify storefront with custom Liquid sections, product collections, responsive UI, and an optimized shopping experience. Configured and managed products, collections, navigation, and essential e-commerce functionality through Shopify.</p>
@@ -462,18 +486,19 @@
       <div class="container" data-reveal-group>
         <p class="eyebrow">05 — Get in touch</p>
         <h2>Contact</h2>
-        <p>Let's build something together. Email: <a class="email-link" href="mailto:team@theforgelab.in">team@theforgelab.in</a></p>
+        <p>Let's build something together. We reply within 24 hours. Email: <a class=\"email-link\" href=\"mailto:team@theforgelab.in\">team@theforgelab.in</a></p>
         <form class="contact-form" id="contactForm" action="https://formsubmit.co/team@theforgelab.in" method="POST">
           <!-- FormSubmit Configuration -->
           <input type="hidden" name="_subject" value="New Contact from ForgeLab Website">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="box">
+          <input type="hidden" name="_next" value="https://theforgelab.in/#contact">
           <input type="text" name="_honey" style="display:none">
           
-          <input type="text" name="name" placeholder="Your name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <textarea name="message" placeholder="Brief message" rows="4" required></textarea>
-          <button class="btn" type="submit">Send</button>
+          <input type="text" name="name" placeholder="Your name" aria-label="Your name" required />
+          <input type="email" name="email" placeholder="Email" aria-label="Email address" required />
+          <textarea name="message" placeholder="Brief message" aria-label="Brief message" rows="4" required></textarea>
+          <button class="btn" type="submit" id="contactSubmitBtn">Send</button>
           
           <div class="form-status" id="formStatus" aria-live="polite"></div>
         </form>
@@ -484,7 +509,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <a class="footer-brand" href="#home">
-        <img src="assets/forge-logo.png" alt="ForgeLab" class="footer-logo" />
+        <img src="assets/forge-logo.png" alt="ForgeLab" class="footer-logo" width="1063" height="768" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="#about">About</a></li>
@@ -501,7 +526,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
   </button>
 
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=30"></script>
   <script src="blog.js?v=1"></script>
 </body>
 </html>
