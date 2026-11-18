@@ -45,8 +45,8 @@
   --shadow-deep: rgba(0,0,0,0.45);
 
   /* Nav */
-  --nav-bg: rgba(15,23,36,0);
-  --nav-scrolled-bg: rgba(10,20,38,0.78);
+  --nav-bg: transparent;
+  --nav-scrolled-bg: rgba(10,20,38,0.82);
 
   /* Carousel */
   --carousel-fade: rgba(7,17,36,0.7);
@@ -103,8 +103,8 @@
   --shadow-focus: rgba(0,0,0,0.08);
   --shadow-deep: rgba(0,0,0,0.15);
 
-  --nav-bg: rgba(240,242,245,0);
-  --nav-scrolled-bg: rgba(240,242,245,0.88);
+  --nav-bg: transparent;
+  --nav-scrolled-bg: rgba(240,242,245,0.92);
 
   --carousel-fade: rgba(228,231,236,0.7);
 
@@ -187,10 +187,22 @@ body{opacity:1;transform:none;transition:opacity .7s var(--ease-spring), transfo
 
 body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;background:radial-gradient(1200px 600px at 10% 10%, var(--ambient-glow), transparent);pointer-events:none;z-index:-1;will-change:auto}
 .container{max-width:1100px;margin:0 auto;padding:58px 24px}
-.nav{position:fixed;left:0;right:0;top:0;top:env(safe-area-inset-top, 0);display:flex;align-items:center;gap:16px;padding:12px 24px;z-index:100;background:var(--nav-bg) !important;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid transparent;transition:background .45s var(--ease-spring), border-color .45s var(--ease-spring), box-shadow .45s var(--ease-spring);pointer-events:none;will-change:background-color,backdrop-filter}
+.nav{position:fixed;left:0;right:0;top:0;top:env(safe-area-inset-top, 0);display:flex;align-items:center;gap:16px;padding:12px 24px;z-index:100;background:var(--nav-bg);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid transparent;transition:background .45s var(--ease-spring), border-color .45s var(--ease-spring), box-shadow .45s var(--ease-spring), backdrop-filter .45s var(--ease-spring);pointer-events:none;will-change:background-color,backdrop-filter}
 .nav > *{pointer-events:auto}
 .nav.scrolled{background:var(--nav-scrolled-bg) !important;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom-color:var(--border-strong);box-shadow:0 8px 40px var(--shadow-nav)}
-.nav .logo{font-weight:700;font-size:20px;color:var(--accent-1);letter-spacing:0.6px;display:flex;align-items:center}
+.nav .logo{font-weight:700;font-size:20px;color:var(--accent-1);letter-spacing:0.6px;display:flex;align-items:center;text-decoration:none}
+
+/* Nav wordmark — two-tone text logo (always crisp, no image dependency) */
+.nav-wordmark{font-size:22px;font-weight:800;letter-spacing:-0.3px;line-height:1}
+.nav-wordmark .brand-forge{color:#fff;font-weight:800;font-family:'Raleway',ui-sans-serif,sans-serif}
+.nav-wordmark .brand-lab{color:var(--accent-1);font-weight:600;font-family:'Nunito',ui-sans-serif,sans-serif}
+
+/* Light mode nav wordmark */
+[data-theme="light"] .nav-wordmark .brand-forge{color:#1a202c}
+[data-theme="light"] .nav-wordmark .brand-lab{color:var(--accent-1)}
+/* Light mode nav links */
+[data-theme="light"] .nav .nav-links a{color:#1a202c;opacity:0.82}
+[data-theme="light"] .nav .nav-links a:hover{color:#1a202c;opacity:1}
 /* Larger, responsive nav logo */
 .nav .logo img, .nav .nav-logo{
   height:72px; /* desktop */
@@ -203,9 +215,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 /* Tablet / small screens */
 @media (max-width:900px){
   .nav .logo img, .nav .nav-logo{height:108px; max-height:108px}
-  /* Logo fades in when navbar gets its scrolled background */
-  .nav .logo{opacity:0;transition:opacity .45s ease;pointer-events:none}
-  .nav.scrolled .logo{opacity:1;pointer-events:auto}
+  /* Text wordmark is always visible on mobile — no fade needed */
 }
 
 /* Small phones */
@@ -218,9 +228,9 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
   .nav .logo img, .nav .nav-logo{height:78px; max-height:78px}
 }
 .nav .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:18px;align-items:center}
-.nav .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;transition:color .25s ease}
+.nav .nav-links a{color:var(--text-bright);text-decoration:none;font-weight:600;transition:color .25s ease;opacity:0.88}
 .btn-cta{margin-left:auto;background:var(--btn-primary-gradient);border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
-.hamburger{display:none;background:transparent;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:8px;z-index:102;position:relative}
+.hamburger{display:none;background:transparent;border:none;color:var(--text-bright);font-size:24px;cursor:pointer;padding:8px;z-index:102;position:relative}
 .hamburger:active{transform:scale(0.95)}
 
 /* Theme toggle button (right side of nav) */
@@ -270,7 +280,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 /* Hover effects only on devices with hover capability (desktop) */
 @media (hover: hover) and (pointer: fine) {
   .btn-cta:hover, .btn:hover{transform:translateY(-3px) scale(1.03); box-shadow:0 22px 44px rgba(245,166,35,0.32)}
-  .nav .nav-links a:hover{color:var(--text-bright)}
+  .nav .nav-links a:hover{color:var(--text-bright);opacity:1}
   .service-card:hover{transform:translateY(-6px); border-color:rgba(232,96,76,0.5); box-shadow:0 32px 70px var(--shadow-card-hover), 0 0 0 1px rgba(232,96,76,0.12)}
   .service-card:hover::before{opacity:1}
   .project-card:hover{transform:translateY(-6px); border-color:var(--border-emphasis); box-shadow:0 32px 70px var(--shadow-card-hover)}
