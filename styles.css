@@ -200,9 +200,6 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 /* Light mode nav wordmark */
 [data-theme="light"] .nav-wordmark .brand-forge{color:#1a202c}
 [data-theme="light"] .nav-wordmark .brand-lab{color:var(--accent-1)}
-/* Light mode nav links */
-[data-theme="light"] .nav .nav-links a{color:#1a202c;opacity:0.82}
-[data-theme="light"] .nav .nav-links a:hover{color:#1a202c;opacity:1}
 /* Larger, responsive nav logo */
 .nav .logo img, .nav .nav-logo{
   height:72px; /* desktop */
@@ -228,7 +225,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
   .nav .logo img, .nav .nav-logo{height:78px; max-height:78px}
 }
 .nav .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:18px;align-items:center}
-.nav .nav-links a{color:var(--text-bright);text-decoration:none;font-weight:600;transition:color .25s ease;opacity:0.88}
+.nav .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;transition:color .25s ease}
 .btn-cta{margin-left:auto;background:var(--btn-primary-gradient);border:none;padding:8px 14px;border-radius:10px;color:#071124;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 25px rgba(232,96,76,0.18)}
 .hamburger{display:none;background:transparent;border:none;color:var(--text-bright);font-size:24px;cursor:pointer;padding:8px;z-index:102;position:relative}
 .hamburger:active{transform:scale(0.95)}
@@ -280,7 +277,7 @@ body::before{content:"";position:fixed;left:0;top:0;width:100%;height:100%;backg
 /* Hover effects only on devices with hover capability (desktop) */
 @media (hover: hover) and (pointer: fine) {
   .btn-cta:hover, .btn:hover{transform:translateY(-3px) scale(1.03); box-shadow:0 22px 44px rgba(245,166,35,0.32)}
-  .nav .nav-links a:hover{color:var(--text-bright);opacity:1}
+  .nav .nav-links a:hover{color:var(--text-bright)}
   .service-card:hover{transform:translateY(-6px); border-color:rgba(232,96,76,0.5); box-shadow:0 32px 70px var(--shadow-card-hover), 0 0 0 1px rgba(232,96,76,0.12)}
   .service-card:hover::before{opacity:1}
   .project-card:hover{transform:translateY(-6px); border-color:var(--border-emphasis); box-shadow:0 32px 70px var(--shadow-card-hover)}
